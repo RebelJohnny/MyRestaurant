@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Application/">
+    <Project Path="Application/MyRestaurant.Application.Contracts/MyRestaurant.Application.Contracts.csproj" />
+    <Project Path="Application/MyRestaurant.Application.Query.Contracts/MyRestaurant.Application.Query.Contracts.csproj" />
+    <Project Path="Application/MyRestaurant.Application.Query/MyRestaurant.Application.Query.csproj" />
+    <Project Path="Application/MyRestaurant.Application/MyRestaurant.Application.csproj" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="Domain/MyRestaurant.Domain/MyRestaurant.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Endpoints/">
+    <Project Path="Endpoints/MyRestaurant.Endpoint.WebApi/MyRestaurant.Endpoint.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructrure/MyRestaurant.EF.Read/MyRestaurant.EF.Read.csproj" />
+    <Project Path="Infrastructrure/MyRestaurant.EF/MyRestaurant.EF.csproj" />
+  </Folder>
+</Solution>
