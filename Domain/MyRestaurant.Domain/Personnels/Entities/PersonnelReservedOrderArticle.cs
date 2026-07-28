@@ -1,12 +1,11 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
-using MyRestaurant.Domain.Shared.Enums;
 
 namespace MyRestaurant.Domain.Personnels.Entities
 {
-    public class PersonnelReservedOrderArticle : Entity
+    public class PersonnelReservedOrderArticle : AuditableEntity
     {
-        public MealPeriodEnum MealPeriod { get; private set; }
+        public long MealPeriodId { get; private set; }
         public long MenuItemId { get; private set; }
         public short Count { get; private set; }
         public bool IsReceived { get; private set; }
@@ -15,7 +14,7 @@ namespace MyRestaurant.Domain.Personnels.Entities
         private PersonnelReservedOrderArticle(PersonnelReservedOrderArticleArgs args)
         {
             Id = args.Id;
-            MealPeriod = args.MealPeriod;
+            MealPeriodId = args.MealPeriodId;
             MenuItemId = args.MenuItemId;
             Count = args.Count;
             IsReceived = false;

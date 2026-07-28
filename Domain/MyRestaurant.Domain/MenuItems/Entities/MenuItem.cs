@@ -4,7 +4,7 @@ using MyRestaurant.Domain.Shared.Abstracts;
 
 namespace MyRestaurant.Domain.MenuItems.Entities
 {
-    public class MenuItem : Entity, IAggregateRoot
+    public class MenuItem : AuditableEntity, IAggregateRoot
     {
         public string Name { get; private set; }
         public MenuItemTypeEnum Type { get; private set; }
@@ -25,6 +25,10 @@ namespace MyRestaurant.Domain.MenuItems.Entities
         {
             args.Name = Name;
             args.Type = Type;
+        }
+        public void SoftDelete()
+        {
+            IsDeleted = true;
         }
     }
 }

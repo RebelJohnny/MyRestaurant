@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MyRestaurant.Domain.Shared.Enums;
 
 namespace MyRestaurant.Application.Contracts.Menus
 {
@@ -13,7 +12,7 @@ namespace MyRestaurant.Application.Contracts.Menus
     public class UpdateMenuOnDayCommandArticle
     {
         public long? Id { get; set; }
-        public MealPeriodEnum MealPeriod { get; set; }
+        public long MealPeriodId { get; set; }
         public long MenuItemId { get; set; }
     }
 }

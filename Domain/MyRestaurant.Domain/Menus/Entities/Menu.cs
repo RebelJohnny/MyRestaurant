@@ -3,7 +3,7 @@ using MyRestaurant.Domain.Shared.Abstracts;
 
 namespace MyRestaurant.Domain.Menus.Entities
 {
-    public class Menu : Entity, IAggregateRoot
+    public class Menu : AuditableEntity, IAggregateRoot
     {
         public DateTimeOffset Date { get; private set; }
         private List<MenuArticle> _articles = [];

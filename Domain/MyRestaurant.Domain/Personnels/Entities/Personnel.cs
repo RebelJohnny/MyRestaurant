@@ -3,7 +3,7 @@ using MyRestaurant.Domain.Shared.Abstracts;
 
 namespace MyRestaurant.Domain.Personnels.Entities
 {
-    public class Personnel : Entity, IAggregateRoot
+    public class Personnel : AuditableEntity, IAggregateRoot
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
@@ -40,6 +40,10 @@ namespace MyRestaurant.Domain.Personnels.Entities
             {
                 reserve.SetArticles(args.Articles);
             }
+        }
+        public void SoftDelete()
+        {
+            IsDeleted = true;
         }
     }
 }

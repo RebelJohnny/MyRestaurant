@@ -1,10 +1,9 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
-using MyRestaurant.Domain.Shared.Enums;
 
 namespace MyRestaurant.Domain.Personnels.Entities
 {
-    public class PersonnelReservedOrder : Entity
+    public class PersonnelReservedOrder : AuditableEntity
     {
         public long PersonnelId { get; private set; }
         public DateTimeOffset Date { get; private set; }
@@ -28,9 +27,9 @@ namespace MyRestaurant.Domain.Personnels.Entities
             _articles = newArticles;
         }
 
-        internal void Receive(MealPeriodEnum mealPeriod)
+        internal void Receive(long mealPeriodId)
         {
-            var itemsToBeReceived = Articles.Where(a => a.MealPeriod == mealPeriod).ToList();
+            var itemsToBeReceived = Articles.Where(a => a.MealPeriodId == mealPeriodId).ToList();
             foreach (var item in itemsToBeReceived)
             {
                 item.Receive();
