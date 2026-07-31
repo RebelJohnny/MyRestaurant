@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Contracts.MenuItems
 {
-    public class DeleteMenuItemCommand : IRequest
+    public class DeleteMenuItemCommand : ICommand
     {
         public long Id { get; set; }
     }

@@ -6,4 +6,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\MyRestaurant.Application.Query\MyRestaurant.Application.Query.csproj" />
+    <ProjectReference Include="..\..\Application\MyRestaurant.Application\MyRestaurant.Application.csproj" />
+    <ProjectReference Include="..\..\Framework\MyRestaurant.Framework\MyRestaurant.Framework.csproj" />
+    <ProjectReference Include="..\..\Infrastructrure\MyRestaurant.EF.Read\MyRestaurant.EF.Read.csproj" />
+    <ProjectReference Include="..\..\Infrastructrure\MyRestaurant.EF\MyRestaurant.EF.csproj" />
+  </ItemGroup>
+
 </Project>

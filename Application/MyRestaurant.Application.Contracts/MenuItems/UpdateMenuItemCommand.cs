@@ -1,9 +1,9 @@
-﻿using MediatR;
-using MyRestaurant.Domain.MenuItems.Enums;
+﻿using MyRestaurant.Domain.MenuItems.Enums;
+using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Contracts.MenuItems
 {
-    public class UpdateMenuItemCommand : IRequest
+    public class UpdateMenuItemCommand : ICommand
     {
         public long Id { get; set; }
         public string Name { get; set; }

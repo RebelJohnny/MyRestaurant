@@ -11,6 +11,9 @@
   <Folder Name="/Endpoints/">
     <Project Path="Endpoints/MyRestaurant.Endpoint.WebApi/MyRestaurant.Endpoint.WebApi.csproj" />
   </Folder>
+  <Folder Name="/Framework/">
+    <Project Path="Framework/MyRestaurant.Framework/MyRestaurant.Framework.csproj" Id="c64d232c-5d63-44b4-8938-0a068b7c3d68" />
+  </Folder>
   <Folder Name="/Infrastructure/">
     <Project Path="Infrastructrure/MyRestaurant.EF.Read/MyRestaurant.EF.Read.csproj" />
     <Project Path="Infrastructrure/MyRestaurant.EF/MyRestaurant.EF.csproj" />

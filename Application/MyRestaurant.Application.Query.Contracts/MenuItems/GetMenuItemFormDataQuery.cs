@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Query.Contracts.MenuItems
 {
-    public class GetMenuItemFormDataQuery : IRequest<MenuItemFormData>
+    public class GetMenuItemFormDataQuery : IQuery<MenuItemFormData>
     {
         public long Id { get; set; }
     }

@@ -1,9 +1,9 @@
-﻿using MediatR;
-using MyRestaurant.Application.Query.Contracts.Shared;
+﻿using MyRestaurant.Application.Query.Contracts.Shared;
+using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Query.Contracts.MenuItems
 {
-    public class GetMenuItemsQuery : IRequest<IEnumerable<MenuItemQueryResult>>
+    public class GetMenuItemsQuery : IQuery<IEnumerable<MenuItemQueryResult>>
     {
         public PaginationParams PaginationParams { get; set; }
     }

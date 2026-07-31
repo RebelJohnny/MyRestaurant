@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Contracts.Personnels
 {
-    public class ReserveOrderForPersonnelCommand : IRequest
+    public class ReserveOrderForPersonnelCommand : ICommand
     {
         public long? Id { get; set; }
         public DateTimeOffset Date { get; set; }

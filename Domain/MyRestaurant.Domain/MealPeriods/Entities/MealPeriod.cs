@@ -1,5 +1,6 @@
 ﻿using MyRestaurant.Domain.MealPeriods.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.MealPeriods.Entities
 {
@@ -11,19 +12,18 @@ namespace MyRestaurant.Domain.MealPeriods.Entities
         public byte[] RowVersion { get; private set; }
         public bool IsDeleted { get; private set; }
         private MealPeriod() { }
-        private MealPeriod(MealPeriodArgs args)
+        private MealPeriod(ITimestampIdGenerator idGenerator, MealPeriodArgs args)
         {
-            Id = args.Id;
+            Id = idGenerator.NextId();
             Name = args.Name;
             Time = args.Time;
         }
-        public static MealPeriod Create(MealPeriodArgs args)
+        public static MealPeriod Create(ITimestampIdGenerator idGenerator, MealPeriodArgs args)
         {
-            return new MealPeriod(args);
+            return new MealPeriod(idGenerator, args);
         }
         public void Modify(MealPeriodArgs args)
         {
-            Id = args.Id;
             Name = args.Name;
             Time = args.Time;
         }

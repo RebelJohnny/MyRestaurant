@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Contracts.Menus
 {
-    public class UpdateMenuOnDayCommand : IRequest
+    public class UpdateMenuOnDayCommand : ICommand
     {
         public long? Id { get; set; }
         public DateTimeOffset Date { get; set; }
