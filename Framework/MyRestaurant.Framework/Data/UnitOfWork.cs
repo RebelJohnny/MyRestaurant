@@ -5,10 +5,10 @@ namespace MyRestaurant.Framework.Data
 {
     public class UnitOfWork(DbContext context) : IUnitOfWork
     {
-        public async Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             NormalizeStrings();
-            return await context.SaveChangesAsync();
+            return await context.SaveChangesAsync(cancellationToken);
         }
         private void NormalizeStrings()
         {

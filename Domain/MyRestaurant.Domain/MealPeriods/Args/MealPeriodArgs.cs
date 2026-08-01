@@ -1,9 +1,9 @@
 ﻿namespace MyRestaurant.Domain.MealPeriods.Args
 {
-    public class MealPeriodArgs
+    public sealed record MealPeriodArgs
     {
-        public long? Id { get; set; }
-        public string Name { get; set; }
-        public int Time { get; set; }
+        public required long? Id { get; init; }
+        public required string Name { get; init; }
+        public required int Time { get; init; }
     }
 }

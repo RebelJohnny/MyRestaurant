@@ -4,7 +4,7 @@ using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.MealPeriods.Entities
 {
-    public class MealPeriod : Entity
+    public sealed class MealPeriod : Entity
     {
         public string Name { get; private set; }
         public int Time { get; private set; }

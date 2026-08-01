@@ -2,10 +2,10 @@
 
 namespace MyRestaurant.Domain.MenuItems.Args
 {
-    public class MenuItemArgs
+    public sealed record MenuItemArgs
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public MenuItemTypeEnum Type { get; set; }
+        public required long? Id { get; init; }
+        public required string Name { get; init; }
+        public required MenuItemTypeEnum Type { get; init; }
     }
 }

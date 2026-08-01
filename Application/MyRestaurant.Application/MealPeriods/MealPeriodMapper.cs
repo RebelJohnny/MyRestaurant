@@ -6,17 +6,27 @@ namespace MyRestaurant.Application.MealPeriods
 {
     internal static class MealPeriodMapper
     {
+        internal static MealPeriodDTO Map(MealPeriod mealPeriod)
+        {
+            return new MealPeriodDTO(mealPeriod.Id, mealPeriod.Name, mealPeriod.Time);
+        }
         internal static MealPeriodArgs Map(CreateMealPeriodCommand command)
         {
             return new MealPeriodArgs
             {
+                Id = null,
                 Name = command.Name,
                 Time = command.Time
             };
         }
-        internal static MealPeriodDTO Map(MealPeriod mealPeriod)
+        internal static MealPeriodArgs Map(UpdateMealPeriodCommand command)
         {
-            return new MealPeriodDTO(mealPeriod.Id, mealPeriod.Name, mealPeriod.Time);
+            return new MealPeriodArgs
+            {
+                Id = command.Id,
+                Name = command.Name,
+                Time = command.Time
+            };
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.Application.Contracts.MealPeriods
 {
-    public class CreateMealPeriodCommand : ICommand<MealPeriodDTO>
+    public sealed class CreateMealPeriodCommand : ICommand<MealPeriodDTO>
     {
         public string Name { get; set; }
         public int Time { get; set; }
