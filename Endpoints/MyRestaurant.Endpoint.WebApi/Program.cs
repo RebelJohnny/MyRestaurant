@@ -1,19 +1,17 @@
 using MyRestaurant.Application._ConfigurationExtensions;
 using MyRestaurant.Application.Query._ConfigurationExtensions;
-using MyRestaurant.EF.ConfigurationExtensions;
-using MyRestaurant.EF.Read.ConfigurationExtensions;
+using MyRestaurant.EF._ConfigurationExtensions;
+using MyRestaurant.EF.Read._ConfigurationExtensions;
 using MyRestaurant.Framework.Data;
 using MyRestaurant.Framework.Helpers;
 using MyRestaurant.Framework.HttpContext;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-var assembly = Assembly.GetExecutingAssembly();
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Learn more about configuring Open API at https://aka.ms/aspnet/openapi
 // FUTURE PHASES: Authentication
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ContextAccessor>();
@@ -25,7 +23,8 @@ builder.Services
     .AddRepositories()
     .AddQueryRepositories()
     .AddCommandHandlers()
-    .AddQueryHandlers();
+    .AddQueryHandlers()
+    .AddSwaggerGen();
 builder.Services.AddCors(opt =>
 {
     opt.AddDefaultPolicy(builder =>
@@ -33,19 +32,18 @@ builder.Services.AddCors(opt =>
         builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
     });
 });
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 //builder.Services.AddSwaggerUI();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant API");
+    });
 }
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/openapi/v1.json", "Restaurant API");
-});
 app.UseCors(opt =>
 {
     opt.SetIsOriginAllowed(origin => true)

@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.Application.Query.Contracts.MenuItems
 {
-    public class GetMenuItemFormDataQuery : IQuery<MenuItemFormData>
+    public sealed class GetMenuItemFormDataQuery : IQuery<MenuItemFormData>
     {
         public long Id { get; set; }
     }

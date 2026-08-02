@@ -17,6 +17,7 @@ namespace MyRestaurant.Domain.MealPeriods.Entities
             Id = idGenerator.NextId();
             Name = args.Name;
             Time = args.Time;
+            IsActive = true;
         }
         public static MealPeriod Create(ITimestampIdGenerator idGenerator, MealPeriodArgs args)
         {

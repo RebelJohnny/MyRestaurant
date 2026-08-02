@@ -2,14 +2,14 @@
 
 namespace MyRestaurant.Application.Contracts.Menus
 {
-    public class UpdateMenuOnDayCommand : ICommand
+    public sealed class UpdateMenuOnDayCommand : ICommand
     {
         public long? Id { get; set; }
         public DateTimeOffset Date { get; set; }
         public List<UpdateMenuOnDayCommandArticle> Articles { get; set; }
     }
 
-    public class UpdateMenuOnDayCommandArticle
+    public sealed class UpdateMenuOnDayCommandArticle
     {
         public long? Id { get; set; }
         public long MealPeriodId { get; set; }

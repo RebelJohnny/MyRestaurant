@@ -1,10 +1,9 @@
-﻿using MyRestaurant.Application.Query.Contracts.Shared;
-using MyRestaurant.Framework.Mediator;
+﻿using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Query.Contracts.Personnels
 {
-    public class GetPersonnelQuery : IQuery<PersonnelQueryResult>
+    public sealed class GetPersonnelQuery : IQuery<IEnumerable<PersonnelQueryResult>>
     {
-        public PaginationParams PaginationParams { get; set; }
+        //public PaginationParams PaginationParams { get; set; }
     }
 }

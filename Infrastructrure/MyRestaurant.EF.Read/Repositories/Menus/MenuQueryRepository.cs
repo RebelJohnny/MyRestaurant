@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.EF.Read.Repositories.Menus
 {
-    public class MenuQueryRepository : IMenuItemQueryRepository
+    public class MenuQueryRepository : IMenuQueryRepository
     {
     }
 }

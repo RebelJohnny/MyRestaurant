@@ -1,5 +1,6 @@
 ﻿using MyRestaurant.Domain.Menus.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.Menus.Entities
 {
@@ -10,14 +11,14 @@ namespace MyRestaurant.Domain.Menus.Entities
         public IReadOnlyCollection<MenuArticle> Articles => _articles;
         public byte[] RowVersion { get; private set; }
         private Menu() { }
-        private Menu(MenuArgs args)
+        private Menu(ITimestampIdGenerator idGenerator, MenuArgs args)
         {
-            Id = args.Id;
+            Id = idGenerator.NextId();
             Date = args.Date;
         }
-        public static Menu Create(MenuArgs args)
+        public static Menu Create(ITimestampIdGenerator idGenerator, MenuArgs args)
         {
-            return new Menu(args);
+            return new Menu(idGenerator, args);
         }
         public void SetArticles(List<MenuArticleArgs> args)
         {

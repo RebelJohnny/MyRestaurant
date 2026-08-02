@@ -1,9 +1,4 @@
 ﻿namespace MyRestaurant.Application.Contracts.Personnels
 {
-    public class PersonnelDTO
-    {
-        public long Id { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-    }
+    public sealed record PersonnelDTO(long Id, string Code, string Name);
 }

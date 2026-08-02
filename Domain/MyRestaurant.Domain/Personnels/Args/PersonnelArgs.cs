@@ -1,9 +1,8 @@
 ﻿namespace MyRestaurant.Domain.Personnels.Args
 {
-    public class PersonnelArgs
+    public sealed record PersonnelArgs
     {
-        public long Id { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public required string Code { get; init; }
+        public required string Name { get; init; }
     }
 }

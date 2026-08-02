@@ -9,6 +9,8 @@ namespace MyRestaurant.Application.Query._ConfigurationExtensions
     {
         public static IServiceCollection AddQueryHandlers(this IServiceCollection services)
         {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
             var implementations = typeof(MealPeriodQueryHandler).Assembly.GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract);
 
@@ -23,7 +25,7 @@ namespace MyRestaurant.Application.Query._ConfigurationExtensions
 
                 foreach (var @interface in interfaces)
                 {
-                    services.AddScoped(@interface, implementation);
+                    services.AddTransient(@interface, implementation);
                 }
             }
 

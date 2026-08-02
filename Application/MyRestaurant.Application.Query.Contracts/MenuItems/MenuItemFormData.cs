@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.Application.Query.Contracts.MenuItems
 {
-    public class MenuItemFormData
+    public sealed class MenuItemFormData
     {
         public long Id { get; set; }
         public string Name { get; set; }

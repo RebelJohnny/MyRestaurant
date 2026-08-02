@@ -5,9 +5,12 @@ namespace MyRestaurant.Domain.Menus.Entities
 {
     public class MenuArticle : AuditableEntity
     {
-        public long MenuItemId { get; set; }
-        public long MealPeriodId { get; set; }
+        public long MenuItemId { get; private set; }
+        public long MealPeriodId { get; private set; }
         public byte[] RowVersion { get; private set; }
+
+        public long MenuId { get; private set; }
+        public Menu Menu { get; private set; }
         private MenuArticle() { }
         private MenuArticle(MenuArticleArgs args)
         {

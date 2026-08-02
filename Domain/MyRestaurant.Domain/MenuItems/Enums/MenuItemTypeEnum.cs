@@ -1,6 +1,6 @@
 ﻿namespace MyRestaurant.Domain.MenuItems.Enums
 {
-    public enum MenuItemTypeEnum
+    public enum MenuItemTypeEnum : short
     {
         Food,
         Dessert

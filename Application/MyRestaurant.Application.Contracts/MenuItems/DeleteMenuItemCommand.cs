@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.Application.Contracts.MenuItems
 {
-    public class DeleteMenuItemCommand : ICommand
+    public sealed class DeleteMenuItemCommand : ICommand
     {
         public long Id { get; set; }
     }

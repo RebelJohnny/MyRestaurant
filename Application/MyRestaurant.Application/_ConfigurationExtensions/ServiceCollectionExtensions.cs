@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MyRestaurant.Application.MealPeriods;
-using MyRestaurant.Framework.Helpers;
 using MyRestaurant.Framework.Mediator;
 using System.Reflection;
 
@@ -10,6 +9,8 @@ namespace MyRestaurant.Application._ConfigurationExtensions
     {
         public static IServiceCollection AddCommandHandlers(this IServiceCollection services)
         {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
             var implementations = typeof(MealPeriodCommandHandler).Assembly.GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract);
 
@@ -25,10 +26,9 @@ namespace MyRestaurant.Application._ConfigurationExtensions
 
                 foreach (var @interface in interfaces)
                 {
-                    services.AddScoped(@interface, implementation);
+                    services.AddTransient(@interface, implementation);
                 }
             }
-
             return services;
         }
     }

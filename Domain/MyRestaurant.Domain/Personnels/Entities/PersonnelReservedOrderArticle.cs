@@ -10,6 +10,9 @@ namespace MyRestaurant.Domain.Personnels.Entities
         public short Count { get; private set; }
         public bool IsReceived { get; private set; }
         public byte[] RowVersion { get; private set; }
+
+        public long PersonnelReservedOrderId { get; private set; }
+        public PersonnelReservedOrder PersonnelReservedOrder { get; private set; }
         private PersonnelReservedOrderArticle() { }
         private PersonnelReservedOrderArticle(PersonnelReservedOrderArticleArgs args)
         {

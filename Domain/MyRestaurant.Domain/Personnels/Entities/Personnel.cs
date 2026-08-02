@@ -1,5 +1,6 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.Personnels.Entities
 {
@@ -12,15 +13,15 @@ namespace MyRestaurant.Domain.Personnels.Entities
         public byte[] RowVersion { get; private set; }
         public bool IsDeleted { get; private set; }
         private Personnel() { }
-        private Personnel(PersonnelArgs args)
+        private Personnel(ITimestampIdGenerator idGenerator, PersonnelArgs args)
         {
-            Id = args.Id;
+            Id = idGenerator.NextId();
             Code = args.Code;
             Name = args.Name;
         }
-        public static Personnel Create(PersonnelArgs args)
+        public static Personnel Create(ITimestampIdGenerator idGenerator, PersonnelArgs args)
         {
-            return new Personnel(args);
+            return new Personnel(idGenerator, args);
         }
         public void Modify(PersonnelArgs args)
         {

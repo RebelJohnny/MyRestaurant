@@ -1,9 +1,8 @@
 ﻿namespace MyRestaurant.Domain.Menus.Args
 {
-    public class MenuArgs
+    public sealed record MenuArgs
     {
-        public long Id { get; set; }
-        public DateTimeOffset Date { get; set; }
-        public List<MenuArticleArgs> Articles { get; set; }
+        public required DateTimeOffset Date { get; init; }
+        public required List<MenuArticleArgs> Articles { get; init; }
     }
 }

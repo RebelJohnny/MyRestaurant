@@ -14,7 +14,6 @@ namespace MyRestaurant.Application.MealPeriods
         {
             return new MealPeriodArgs
             {
-                Id = null,
                 Name = command.Name,
                 Time = command.Time
             };
@@ -23,7 +22,6 @@ namespace MyRestaurant.Application.MealPeriods
         {
             return new MealPeriodArgs
             {
-                Id = command.Id,
                 Name = command.Name,
                 Time = command.Time
             };

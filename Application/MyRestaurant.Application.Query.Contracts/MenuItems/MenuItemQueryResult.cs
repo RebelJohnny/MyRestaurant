@@ -1,6 +1,6 @@
 ﻿namespace MyRestaurant.Application.Query.Contracts.MenuItems
 {
-    public class MenuItemQueryResult
+    public sealed class MenuItemQueryResult
     {
         public long Id { get; set; }
         public string Name { get; set; }
