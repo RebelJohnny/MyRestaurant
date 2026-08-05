@@ -6,9 +6,9 @@ namespace MyRestaurant.Application.Meals
 {
     internal static class MealMapper
     {
-        internal static MealDTO Map(Meal menuItem)
+        internal static MealDTO Map(Meal meal)
         {
-            return new MealDTO(menuItem.Id, menuItem.Name, (short)menuItem.Type);
+            return new MealDTO(meal.Id, meal.Name, (short)meal.Type);
         }
         internal static MealArgs Map(CreateMealCommand command)
         {

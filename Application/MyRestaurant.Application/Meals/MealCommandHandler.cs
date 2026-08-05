@@ -23,16 +23,16 @@ namespace MyRestaurant.Application.Meals
 
         public async Task Handle(UpdateMealCommand request, CancellationToken cancellationToken)
         {
-            var menuItem = await repository.GetById(request.Id);
+            var meal = await repository.GetById(request.Id);
             var args = MealMapper.Map(request);
-            menuItem.Modify(args);
+            meal.Modify(args);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         public async Task Handle(DeleteMealCommand request, CancellationToken cancellationToken)
         {
-            var menuItem = await repository.GetById(request.Id);
-            menuItem.SoftDelete();
+            var meal = await repository.GetById(request.Id);
+            meal.SoftDelete();
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

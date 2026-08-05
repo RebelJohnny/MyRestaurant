@@ -15,7 +15,7 @@ namespace MyRestaurant.Domain.Menus.Entities
         private MenuArticle(MenuArticleArgs args)
         {
             Id = args.Id;
-            MealId = args.MenuItemId;
+            MealId = args.MealId;
             MealPeriodId = args.MealPeriodId;
         }
         public static MenuArticle Create(MenuArticleArgs args)

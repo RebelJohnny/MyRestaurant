@@ -6,7 +6,7 @@ namespace MyRestaurant.EF.Read.Repositories.Meals
 {
     internal class MealQueryRepository(RestaurantQueryContext context) : IMealQueryRepository
     {
-        private protected DbSet<Meal> dbSet = context.MenuItems;
+        private protected DbSet<Meal> dbSet = context.Meals;
         public async Task<MealFormData?> GetById(long id, CancellationToken cancellationToken)
         {
             return await dbSet.Where(mi => mi.Id == id).Select(mi => new MealFormData

@@ -1,6 +1,4 @@
-﻿using MyRestaurant.Domain.MenuItems.Enums;
-
-namespace MyRestaurant.Application.Query.Contracts.Menus
+﻿namespace MyRestaurant.Application.Query.Contracts.Menus
 {
     public class MenuOnMealPeriodQueryResult
     {

@@ -12,7 +12,7 @@ namespace MyRestaurant.Application.Contracts.Personnels
     {
         public long? Id { get; set; }
         public long MealPeriodId { get; set; }
-        public long MenuItemId { get; set; }
+        public long MealId { get; set; }
         public short Count { get; set; } = 1;
     }
 }

@@ -10,8 +10,8 @@ namespace MyRestaurant.Application.Query.Meals
     {
         public async Task<MealFormData> Handle(GetMealFormDataQuery request, CancellationToken cancellationToken)
         {
-            var menuItem = await repository.GetById(request.Id, cancellationToken);
-            return menuItem;
+            var meal = await repository.GetById(request.Id, cancellationToken);
+            return meal;
         }
 
         public async Task<IEnumerable<MealQueryResult>> Handle(GetMealsQuery request, CancellationToken cancellationToken)

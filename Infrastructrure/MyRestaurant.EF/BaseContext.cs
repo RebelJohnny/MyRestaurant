@@ -15,7 +15,7 @@ namespace MyRestaurant.EF
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonnelConfiguration).Assembly);
         }
         public DbSet<MealPeriod> MealPeriods { get; set; }
-        public DbSet<Meal> MenuItems { get; set; }
+        public DbSet<Meal> Meals { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Personnel> Personnels { get; set; }
     }
