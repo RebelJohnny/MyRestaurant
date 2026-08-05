@@ -5,7 +5,7 @@ namespace MyRestaurant.Domain.Menus.Entities
 {
     public class MenuArticle : AuditableEntity
     {
-        public long MenuItemId { get; private set; }
+        public long MealId { get; private set; }
         public long MealPeriodId { get; private set; }
         public byte[] RowVersion { get; private set; }
 
@@ -15,7 +15,7 @@ namespace MyRestaurant.Domain.Menus.Entities
         private MenuArticle(MenuArticleArgs args)
         {
             Id = args.Id;
-            MenuItemId = args.MenuItemId;
+            MealId = args.MenuItemId;
             MealPeriodId = args.MealPeriodId;
         }
         public static MenuArticle Create(MenuArticleArgs args)

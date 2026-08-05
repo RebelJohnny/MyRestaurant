@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRestaurant.EF.Read.Repositories.MealPeriods;
-using MyRestaurant.EF.Read.Repositories.MenuItems;
+using MyRestaurant.EF.Read.Repositories.Meals;
 using MyRestaurant.EF.Read.Repositories.Menus;
 using MyRestaurant.EF.Read.Repositories.Personnels;
 
@@ -26,7 +26,7 @@ namespace MyRestaurant.EF.Read._ConfigurationExtensions
             //services.AddImplementationsOf(Assembly.GetExecutingAssembly(), typeof(IQueryRepository), ServiceLifetime.Scoped);
 
             services.AddScoped<IMealPeriodQueryRepository, MealPeriodQueryRepository>();
-            services.AddScoped<IMenuItemQueryRepository, MenuItemQueryRepository>();
+            services.AddScoped<IMealQueryRepository, MealQueryRepository>();
             services.AddScoped<IMenuQueryRepository, MenuQueryRepository>();
             services.AddScoped<IPersonnelQueryRepository, PersonnelQueryRepository>();
 
