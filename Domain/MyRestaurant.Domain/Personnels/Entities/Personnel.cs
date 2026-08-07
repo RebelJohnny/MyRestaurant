@@ -28,18 +28,18 @@ namespace MyRestaurant.Domain.Personnels.Entities
             Code = args.Code;
             Name = args.Name;
         }
-        public void ReserveOrders(PersonnelReservedOrderArgs args)
+        public void ReserveOrders(ITimestampIdGenerator idGenerator, PersonnelReservedOrderArgs args)
         {
-            var reserve = ReservedOrders.FirstOrDefault(ro => ro.Id == args.Id);
+            var reserve = ReservedOrders.FirstOrDefault(ro => ro.Date == args.Date);
             if (reserve is null)
             {
-                reserve = PersonnelReservedOrder.Create(args);
-                reserve.SetArticles(args.Articles);
+                reserve = PersonnelReservedOrder.Create(idGenerator, args);
+                reserve.SetArticles(idGenerator, args.Articles);
                 _reservedOrders.Add(reserve);
             }
             else
             {
-                reserve.SetArticles(args.Articles);
+                reserve.SetArticles(idGenerator, args.Articles);
             }
         }
         public void SoftDelete()

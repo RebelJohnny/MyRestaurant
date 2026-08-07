@@ -1,5 +1,6 @@
 ﻿using MyRestaurant.Domain.Menus.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.Menus.Entities
 {
@@ -12,15 +13,15 @@ namespace MyRestaurant.Domain.Menus.Entities
         public long MenuId { get; private set; }
         public Menu Menu { get; private set; }
         private MenuArticle() { }
-        private MenuArticle(MenuArticleArgs args)
+        private MenuArticle(ITimestampIdGenerator idGenerator, MenuArticleArgs args)
         {
-            Id = args.Id;
+            Id = args.Id ?? idGenerator.NextId();
             MealId = args.MealId;
             MealPeriodId = args.MealPeriodId;
         }
-        public static MenuArticle Create(MenuArticleArgs args)
+        public static MenuArticle Create(ITimestampIdGenerator idGenerator, MenuArticleArgs args)
         {
-            return new MenuArticle(args);
+            return new MenuArticle(idGenerator, args);
         }
     }
 }

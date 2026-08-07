@@ -5,5 +5,6 @@ namespace MyRestaurant.Domain.Menus
 {
     public interface IMenuRepository : IRepository<Menu>
     {
+        Task<Menu?> GetByDate(DateTimeOffset date, CancellationToken cancellationToken);
     }
 }

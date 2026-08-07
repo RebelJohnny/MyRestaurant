@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.Application.Query.Contracts.Menus
 {
-    public class GetMenuQuery : IQuery<IEnumerable<MenuQueryResult>>
+    public sealed class GetMenuQuery : IQuery<IEnumerable<MenuQueryResult>>
     {
         public long MealPeriodId { get; set; }
         public string Culture { get; set; }

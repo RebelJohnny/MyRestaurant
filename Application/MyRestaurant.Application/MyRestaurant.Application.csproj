@@ -11,8 +11,4 @@
     <ProjectReference Include="..\MyRestaurant.Application.Contracts\MyRestaurant.Application.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Menus\" />
-  </ItemGroup>
-
 </Project>

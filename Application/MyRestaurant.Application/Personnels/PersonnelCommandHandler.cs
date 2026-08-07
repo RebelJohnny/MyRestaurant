@@ -10,7 +10,8 @@ namespace MyRestaurant.Application.Personnels
     internal class PersonnelCommandHandler(ITimestampIdGenerator idGenerator, IUnitOfWork unitOfWork, IPersonnelRepository repository) :
         ICommandHandler<CreatePersonnelCommand, PersonnelDTO>,
         ICommandHandler<UpdatePersonnelCommand>,
-        ICommandHandler<DeletePersonnelCommand>
+        ICommandHandler<DeletePersonnelCommand>,
+        ICommandHandler<ReserveOrderForPersonnelCommand>
     {
         public async Task<PersonnelDTO> Handle(CreatePersonnelCommand request, CancellationToken cancellationToken)
         {
@@ -23,7 +24,7 @@ namespace MyRestaurant.Application.Personnels
 
         public async Task Handle(UpdatePersonnelCommand request, CancellationToken cancellationToken)
         {
-            var personnel = await repository.GetById(request.Id);
+            var personnel = await repository.GetById(request.Id, cancellationToken);
             var args = PersonnelMapper.Map(request);
             personnel.Modify(args);
             await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -31,8 +32,16 @@ namespace MyRestaurant.Application.Personnels
 
         public async Task Handle(DeletePersonnelCommand request, CancellationToken cancellationToken)
         {
-            var personnel = await repository.GetById(request.Id);
+            var personnel = await repository.GetById(request.Id, cancellationToken);
             personnel.SoftDelete();
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task Handle(ReserveOrderForPersonnelCommand request, CancellationToken cancellationToken)
+        {
+            var personnel = await repository.GetById(request.PersonnelId, cancellationToken);
+            var args = PersonnelMapper.Map(request);
+            personnel.ReserveOrders(idGenerator, args);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

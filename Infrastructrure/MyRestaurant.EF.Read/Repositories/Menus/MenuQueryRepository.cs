@@ -13,7 +13,6 @@ namespace MyRestaurant.EF.Read.Repositories.Menus
             m.Date.Date.CompareTo(startDate) >= 0 &&
             m.Date.Date.CompareTo(endDate) <= 0).Select(m => new MenuOnMealPeriodQueryResult
             {
-                Id = m.Id,
                 Date = m.Date,
                 Articles = m.Articles.Where(ma => ma.MealPeriodId == mealPeriodId).Select(ma => new MenuArticleOnMealPeriodQueryResult
                 {

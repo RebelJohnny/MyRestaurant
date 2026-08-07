@@ -1,5 +1,6 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
 using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.Personnels.Entities
 {
@@ -13,19 +14,19 @@ namespace MyRestaurant.Domain.Personnels.Entities
         public long PersonnelId { get; private set; }
         public Personnel Personnel { get; private set; }
         private PersonnelReservedOrder() { }
-        private PersonnelReservedOrder(PersonnelReservedOrderArgs args)
+        private PersonnelReservedOrder(ITimestampIdGenerator idGenerator, PersonnelReservedOrderArgs args)
         {
-            Id = args.Id;
+            Id = idGenerator.NextId();
             Date = args.Date;
         }
-        internal static PersonnelReservedOrder Create(PersonnelReservedOrderArgs args)
+        internal static PersonnelReservedOrder Create(ITimestampIdGenerator idGenerator, PersonnelReservedOrderArgs args)
         {
-            return new PersonnelReservedOrder(args);
+            return new PersonnelReservedOrder(idGenerator,args);
         }
 
-        internal void SetArticles(List<PersonnelReservedOrderArticleArgs> args)
+        internal void SetArticles(ITimestampIdGenerator idGenerator, List<PersonnelReservedOrderArticleArgs> args)
         {
-            var newArticles = args.Select(PersonnelReservedOrderArticle.Create).ToList();
+            var newArticles = args.Select(a => PersonnelReservedOrderArticle.Create(idGenerator, a)).ToList();
             _articles = newArticles;
         }
 

@@ -1,10 +1,15 @@
 ﻿namespace MyRestaurant.Domain.Personnels.Args
 {
-    public class PersonnelReservedOrderArgs
+    public sealed record PersonnelReservedOrderArgs
     {
-        public long Id { get; set; }
-        public long PersonnelId { get; set; }
-        public DateTimeOffset Date { get; set; }
-        public List<PersonnelReservedOrderArticleArgs> Articles { get; set; }
+        public required DateTimeOffset Date { get; init; }
+        public required List<PersonnelReservedOrderArticleArgs> Articles { get; init; }
+    }
+    public sealed record PersonnelReservedOrderArticleArgs
+    {
+        public required long? Id { get; init; }
+        public required long MealPeriodId { get; init; }
+        public required long MealId { get; init; }
+        public required short Count { get; init; }
     }
 }

@@ -15,14 +15,15 @@ namespace MyRestaurant.Domain.Menus.Entities
         {
             Id = idGenerator.NextId();
             Date = args.Date;
+            SetArticles(idGenerator, args.Articles);
         }
         public static Menu Create(ITimestampIdGenerator idGenerator, MenuArgs args)
         {
             return new Menu(idGenerator, args);
         }
-        public void SetArticles(List<MenuArticleArgs> args)
+        public void SetArticles(ITimestampIdGenerator idGenerator, List<MenuArticleArgs> args)
         {
-            var articles = args.Select(MenuArticle.Create).ToList();
+            var articles = args.Select(a => MenuArticle.Create(idGenerator, a)).ToList();
             _articles = articles;
         }
     }
