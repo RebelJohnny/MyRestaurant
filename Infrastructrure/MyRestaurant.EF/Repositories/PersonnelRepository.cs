@@ -10,7 +10,7 @@ namespace MyRestaurant.EF.Repositories
         private protected DbSet<Personnel> dbSet = context.Set<Personnel>();
         public async Task<Personnel?> GetById(long id, CancellationToken cancellationToken)
         {
-            return await dbSet.Include(p => p.ReservedOrders).ThenInclude(pro => pro.Articles).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            return await dbSet.Include(p => p.Reserves).ThenInclude(pro => pro.Meals).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MyRestaurant.EF.Repositories
         private protected DbSet<Menu> dbSet = context.Set<Menu>();
         public async Task<Menu?> GetByDate(DateTimeOffset date, CancellationToken cancellationToken)
         {
-            return await dbSet.Include(m => m.Articles).FirstOrDefaultAsync(x => x.Date == date, cancellationToken);
+            return await dbSet.Include(m => m.Meals).FirstOrDefaultAsync(x => x.Date == date, cancellationToken);
         }
     }
 }

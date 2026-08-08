@@ -5,18 +5,18 @@ namespace MyRestaurant.Application.Query.Personnel
 {
     internal static class PersonnelQueryMapper
     {
-        internal static List<PersonnelReservedOrderQueryResult> Map(List<PersonnelReservedOrderOnMealPeriodQueryResult> reservedOrders, List<MealFormData> meals)
+        internal static List<PersonnelReserveQueryResult> Map(List<PersonnelReservedOrderOnMealPeriodQueryResult> reservedOrders, List<MealFormData> meals)
         {
-            return [.. reservedOrders.Select(ro => new PersonnelReservedOrderQueryResult
+            return [.. reservedOrders.Select(ro => new PersonnelReserveQueryResult
             {
                 Date = ro.Date,
                 DayOfWeek = ro.Date.DayOfWeek,
                 Meals = ro.Articles.Select(roa =>
                 {
-                    var meal = meals.First(m => m.Id == roa.MealId);
-                    return new PersonnelReservedOrderMeal
+                    var meal = meals.First(m => m.Id == roa.Id);
+                    return new PersonnelReservedMeal
                     {
-                        Id = roa.MealId,
+                        Id = roa.Id,
                         Name = meal.Name,
                         Type = meal.Type,
                         Count = roa.Count

@@ -4,24 +4,23 @@ using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.Menus.Entities
 {
-    public class MenuArticle : AuditableEntity
+    public class MenuMeal : AuditableEntity
     {
-        public long MealId { get; private set; }
+        // Id is MealId
         public long MealPeriodId { get; private set; }
         public byte[] RowVersion { get; private set; }
 
         public long MenuId { get; private set; }
         public Menu Menu { get; private set; }
-        private MenuArticle() { }
-        private MenuArticle(ITimestampIdGenerator idGenerator, MenuArticleArgs args)
+        private MenuMeal() { }
+        private MenuMeal(MenuMealArgs args)
         {
-            Id = args.Id ?? idGenerator.NextId();
-            MealId = args.MealId;
+            Id = args.Id;
             MealPeriodId = args.MealPeriodId;
         }
-        public static MenuArticle Create(ITimestampIdGenerator idGenerator, MenuArticleArgs args)
+        public static MenuMeal Create(MenuMealArgs args)
         {
-            return new MenuArticle(idGenerator, args);
+            return new MenuMeal(args);
         }
     }
 }

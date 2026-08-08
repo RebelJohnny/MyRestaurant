@@ -41,15 +41,15 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
             var data = await mediator.Send(new GetPersonnelFormDataQuery { Id = id }, cancellationToken);
             return Respond(ResponseModel<PersonnelFormData>.Ok(data));
         }
-        [HttpGet("ReservedOrders/{id}")]
-        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelReservedOrderQueryResult>>>> Get(long id, [FromQuery]GetPersonnelReservedOrdersQuery query, CancellationToken cancellationToken)
+        [HttpGet("Reserves/{id}")]
+        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelReserveQueryResult>>>> Get(long id, [FromQuery]GetPersonnelReservedOrdersQuery query, CancellationToken cancellationToken)
         {
             query.PersonnelId = id;
             var data = await mediator.Send(query, cancellationToken);
-            return Respond(ResponseModel<IEnumerable<PersonnelReservedOrderQueryResult>>.Ok(data));
+            return Respond(ResponseModel<IEnumerable<PersonnelReserveQueryResult>>.Ok(data));
         }
-        [HttpPut("ReservedOrders/{id}")]
-        public async Task<ActionResult<ResponseModel>> Put(long id, ReserveOrderForPersonnelCommand command, CancellationToken cancellationToken)
+        [HttpPut("Reserves/{id}")]
+        public async Task<ActionResult<ResponseModel>> Put(long id, ReserveForPersonnelCommand command, CancellationToken cancellationToken)
         {
             command.PersonnelId = id;
             await mediator.Send(command, cancellationToken);

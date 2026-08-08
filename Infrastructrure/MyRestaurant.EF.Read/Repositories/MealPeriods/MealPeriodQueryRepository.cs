@@ -25,7 +25,7 @@ namespace MyRestaurant.EF.Read.Repositories.MealPeriods
                 Name = mp.Name,
                 Time = mp.Time,
                 IsActive = mp.IsActive
-            }).ToListAsync(cancellationToken);
+            }).OrderBy(x => x.Time).ToListAsync(cancellationToken);
         }
     }
 }

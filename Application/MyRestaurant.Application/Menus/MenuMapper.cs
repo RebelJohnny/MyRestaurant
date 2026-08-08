@@ -10,10 +10,9 @@ namespace MyRestaurant.Application.Menus
             return new MenuArgs
             {
                 Date = commmand.Date,
-                Articles = [.. commmand.Articles.Select(a => new MenuArticleArgs 
+                Meals = [.. commmand.Meals.Select(a => new MenuMealArgs 
                 { 
                     Id = a.Id,
-                    MealId = a.MealId,
                     MealPeriodId = a.MealPeriodId,
                 })]
             };

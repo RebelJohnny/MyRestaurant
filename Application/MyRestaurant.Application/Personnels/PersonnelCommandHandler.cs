@@ -11,7 +11,7 @@ namespace MyRestaurant.Application.Personnels
         ICommandHandler<CreatePersonnelCommand, PersonnelDTO>,
         ICommandHandler<UpdatePersonnelCommand>,
         ICommandHandler<DeletePersonnelCommand>,
-        ICommandHandler<ReserveOrderForPersonnelCommand>
+        ICommandHandler<ReserveForPersonnelCommand>
     {
         public async Task<PersonnelDTO> Handle(CreatePersonnelCommand request, CancellationToken cancellationToken)
         {
@@ -37,7 +37,7 @@ namespace MyRestaurant.Application.Personnels
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task Handle(ReserveOrderForPersonnelCommand request, CancellationToken cancellationToken)
+        public async Task Handle(ReserveForPersonnelCommand request, CancellationToken cancellationToken)
         {
             var personnel = await repository.GetById(request.PersonnelId, cancellationToken);
             var args = PersonnelMapper.Map(request);

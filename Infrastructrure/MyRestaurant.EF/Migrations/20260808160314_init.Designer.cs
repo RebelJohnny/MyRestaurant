@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRestaurant.EF;
 
@@ -11,9 +12,11 @@ using MyRestaurant.EF;
 namespace MyRestaurant.EF.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    partial class RestaurantContextModelSnapshot : ModelSnapshot
+    [Migration("20260808160314_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,14 +123,8 @@ namespace MyRestaurant.EF.Migrations
                     b.ToTable("Menus");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Menus.Entities.MenuMeal", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Menus.Entities.MenuArticle", b =>
                 {
-                    b.Property<long>("MenuId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MealPeriodId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
@@ -135,6 +132,15 @@ namespace MyRestaurant.EF.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<long>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MealId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MealPeriodId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MenuId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("ModifiedAt")
@@ -149,9 +155,11 @@ namespace MyRestaurant.EF.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.HasKey("MenuId", "MealPeriodId", "Id");
+                    b.HasKey("Id");
 
-                    b.ToTable("MenuMeal");
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("MenuArticle");
                 });
 
             modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.Personnel", b =>
@@ -193,7 +201,7 @@ namespace MyRestaurant.EF.Migrations
                     b.ToTable("Personnels");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReserve", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedOrder", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -226,17 +234,11 @@ namespace MyRestaurant.EF.Migrations
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("PersonnelReserve");
+                    b.ToTable("PersonnelReservedOrder");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedMeal", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedOrderArticle", b =>
                 {
-                    b.Property<long>("PersonnelReserveId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MealPeriodId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
@@ -252,10 +254,19 @@ namespace MyRestaurant.EF.Migrations
                     b.Property<bool>("IsReceived")
                         .HasColumnType("bit");
 
+                    b.Property<long>("MealId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MealPeriodId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("ModifiedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<long>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonnelReservedOrderId")
                         .HasColumnType("bigint");
 
                     b.Property<byte[]>("RowVersion")
@@ -264,15 +275,17 @@ namespace MyRestaurant.EF.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.HasKey("PersonnelReserveId", "MealPeriodId", "Id");
+                    b.HasKey("Id");
 
-                    b.ToTable("PersonnelReservedMeal");
+                    b.HasIndex("PersonnelReservedOrderId");
+
+                    b.ToTable("PersonnelReservedOrderArticle");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Menus.Entities.MenuMeal", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Menus.Entities.MenuArticle", b =>
                 {
                     b.HasOne("MyRestaurant.Domain.Menus.Entities.Menu", "Menu")
-                        .WithMany("Meals")
+                        .WithMany("Articles")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
@@ -280,40 +293,40 @@ namespace MyRestaurant.EF.Migrations
                     b.Navigation("Menu");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReserve", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedOrder", b =>
                 {
                     b.HasOne("MyRestaurant.Domain.Personnels.Entities.Personnel", "Personnel")
-                        .WithMany("Reserves")
+                        .WithMany("ReservedOrders")
                         .HasForeignKey("PersonnelId")
                         .IsRequired();
 
                     b.Navigation("Personnel");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedMeal", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedOrderArticle", b =>
                 {
-                    b.HasOne("MyRestaurant.Domain.Personnels.Entities.PersonnelReserve", "PersonnelReserve")
-                        .WithMany("Meals")
-                        .HasForeignKey("PersonnelReserveId")
+                    b.HasOne("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedOrder", "PersonnelReservedOrder")
+                        .WithMany("Articles")
+                        .HasForeignKey("PersonnelReservedOrderId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.Navigation("PersonnelReserve");
+                    b.Navigation("PersonnelReservedOrder");
                 });
 
             modelBuilder.Entity("MyRestaurant.Domain.Menus.Entities.Menu", b =>
                 {
-                    b.Navigation("Meals");
+                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.Personnel", b =>
                 {
-                    b.Navigation("Reserves");
+                    b.Navigation("ReservedOrders");
                 });
 
-            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReserve", b =>
+            modelBuilder.Entity("MyRestaurant.Domain.Personnels.Entities.PersonnelReservedOrder", b =>
                 {
-                    b.Navigation("Meals");
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

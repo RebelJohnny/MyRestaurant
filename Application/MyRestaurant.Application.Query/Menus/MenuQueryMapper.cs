@@ -11,9 +11,9 @@ namespace MyRestaurant.Application.Query.Menus
             {
                 Date = m.Date,
                 DayOfWeek = m.Date.DayOfWeek,
-                Meals = m.Articles.Select(ma =>
+                Meals = m.Meals.Select(ma =>
                 {
-                    var meal = meals.First(x => x.Id == ma.MealId);
+                    var meal = meals.First(x => x.Id == ma.Id);
                     return new MenuDayMeal
                     {
                         Id = ma.Id,
@@ -21,6 +21,15 @@ namespace MyRestaurant.Application.Query.Menus
                         Type = meal.Type
                     };
                 })
+            })];
+        }
+        internal static List<MenuDayMeal> Map(List<MealFormData> meals)
+        {
+            return [..meals.Select(m => new MenuDayMeal
+            {
+                Id= m.Id,
+                Name= m.Name,
+                Type = m.Type
             })];
         }
     }

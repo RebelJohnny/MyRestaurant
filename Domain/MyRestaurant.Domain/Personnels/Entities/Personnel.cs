@@ -8,8 +8,8 @@ namespace MyRestaurant.Domain.Personnels.Entities
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
-        private List<PersonnelReservedOrder> _reservedOrders = [];
-        public IReadOnlyCollection<PersonnelReservedOrder> ReservedOrders => _reservedOrders;
+        private List<PersonnelReserve> _reserves = [];
+        public IReadOnlyCollection<PersonnelReserve> Reserves => _reserves;
         public byte[] RowVersion { get; private set; }
         public bool IsDeleted { get; private set; }
         private Personnel() { }
@@ -28,18 +28,18 @@ namespace MyRestaurant.Domain.Personnels.Entities
             Code = args.Code;
             Name = args.Name;
         }
-        public void ReserveOrders(ITimestampIdGenerator idGenerator, PersonnelReservedOrderArgs args)
+        public void ReserveOrders(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
         {
-            var reserve = ReservedOrders.FirstOrDefault(ro => ro.Date == args.Date);
+            var reserve = Reserves.FirstOrDefault(ro => ro.Date == args.Date);
             if (reserve is null)
             {
-                reserve = PersonnelReservedOrder.Create(idGenerator, args);
-                reserve.SetArticles(idGenerator, args.Articles);
-                _reservedOrders.Add(reserve);
+                reserve = PersonnelReserve.Create(idGenerator, args);
+                reserve.SetArticles(args.Meals);
+                _reserves.Add(reserve);
             }
             else
             {
-                reserve.SetArticles(idGenerator, args.Articles);
+                reserve.SetArticles(args.Meals);
             }
         }
         public void SoftDelete()

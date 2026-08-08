@@ -19,6 +19,10 @@ namespace MyRestaurant.Application.Menus
                 menu = Menu.Create(idGenerator, args);
                 await repository.Add(menu);
             }
+            else
+            {
+                menu.SetArticles(args.Meals);
+            }
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

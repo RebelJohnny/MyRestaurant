@@ -14,12 +14,18 @@ namespace MyRestaurant.EF.Read.Repositories.Menus
             m.Date.Date.CompareTo(endDate) <= 0).Select(m => new MenuOnMealPeriodQueryResult
             {
                 Date = m.Date,
-                Articles = m.Articles.Where(ma => ma.MealPeriodId == mealPeriodId).Select(ma => new MenuArticleOnMealPeriodQueryResult
+                Meals = m.Meals.Where(ma => ma.MealPeriodId == mealPeriodId).Select(ma => new MenuMealOnMealPeriodQueryResult
                 {
-                    Id = ma.Id,
-                    MealId = ma.MealId
+                    Id = ma.Id
                 })
             }).ToListAsync(cancellationToken);
+        }
+        public async Task<List<long>> GetMealIdsForDayMealPeriod(DateTimeOffset date, long mealPeriodId, CancellationToken cancellationToken)
+        {
+            return await dbSet.Where(m => m.Date.Date == date.Date)
+                .SelectMany(m => m.Meals.Where(ma => ma.MealPeriodId == mealPeriodId))
+                .Select(ma => ma.Id)
+                .ToListAsync(cancellationToken);
         }
     }
 }

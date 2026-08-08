@@ -22,5 +22,11 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Menus.V1
             await mediator.Send(command, cancellationToken);
             return Respond(ResponseModel.Ok());
         }
+        [HttpGet("Day")]
+        public async Task<ActionResult<ResponseModel<IEnumerable<MenuDayMeal>>>> Get([FromQuery] GetMealsForDayMealPeriodQuery query, CancellationToken cancellationToken)
+        {
+            var data = await mediator.Send(query, cancellationToken);
+            return Respond(ResponseModel<IEnumerable<MenuDayMeal>>.Ok(data));
+        }
     }
 }

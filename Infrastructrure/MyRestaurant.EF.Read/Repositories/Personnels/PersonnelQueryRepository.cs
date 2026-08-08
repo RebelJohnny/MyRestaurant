@@ -28,15 +28,14 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
         }
         public async Task<List<PersonnelReservedOrderOnMealPeriodQueryResult>> GetReservedOrdersBetweenDates(long personnelId, DateTime startDate, DateTime endDate, long mealPeriodId, CancellationToken cancellationToken)
         {
-            return await dbSet.Where(p => p.Id == personnelId).SelectMany(p => p.ReservedOrders.Where(pro =>
+            return await dbSet.Where(p => p.Id == personnelId).SelectMany(p => p.Reserves.Where(pro =>
             pro.Date.Date.CompareTo(startDate) >= 0 &&
             pro.Date.Date.CompareTo(endDate) <= 0)).Select(pro => new PersonnelReservedOrderOnMealPeriodQueryResult
             {
                 Date = pro.Date,
-                Articles = pro.Articles.Where(proa => proa.MealPeriodId == mealPeriodId).Select(proa => new PersonnelReservedOrderArticleOnMealPeriodQueryResult
+                Articles = pro.Meals.Where(proa => proa.MealPeriodId == mealPeriodId).Select(proa => new PersonnelReservedMealOnMealPeriodQueryResult
                 {
                     Id = proa.Id,
-                    MealId = proa.MealId,
                     Count = proa.Count
                 })
             }).ToListAsync(cancellationToken);

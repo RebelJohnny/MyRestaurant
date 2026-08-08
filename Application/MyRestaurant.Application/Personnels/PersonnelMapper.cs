@@ -26,15 +26,14 @@ namespace MyRestaurant.Application.Personnels
                 Name = command.Name
             };
         }
-        internal static PersonnelReservedOrderArgs Map(ReserveOrderForPersonnelCommand command)
+        internal static PersonnelReserveArgs Map(ReserveForPersonnelCommand command)
         {
-            return new PersonnelReservedOrderArgs
+            return new PersonnelReserveArgs
             {
                 Date = command.Date,
-                Articles = [.. command.Articles.Select(a => new PersonnelReservedOrderArticleArgs
+                Meals = [.. command.Meals.Select(a => new PersonnelReservedMealArgs
                 {
                     Id = a.Id,
-                    MealId = a.MealId,
                     MealPeriodId = a.MealPeriodId,
                     Count = a.Count
                 })]

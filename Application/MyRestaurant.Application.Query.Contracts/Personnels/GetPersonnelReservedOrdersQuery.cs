@@ -2,7 +2,7 @@
 
 namespace MyRestaurant.Application.Query.Contracts.Personnels
 {
-    public sealed class GetPersonnelReservedOrdersQuery : IQuery<IEnumerable<PersonnelReservedOrderQueryResult>>
+    public sealed class GetPersonnelReservedOrdersQuery : IQuery<IEnumerable<PersonnelReserveQueryResult>>
     {
         public long PersonnelId { get; set; }
         public long MealPeriodId { get; set; }

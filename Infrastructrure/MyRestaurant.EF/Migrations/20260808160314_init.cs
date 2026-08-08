@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyRestaurant.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,7 +28,7 @@ namespace MyRestaurant.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MenuItems",
+                name: "Meals",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -43,7 +43,7 @@ namespace MyRestaurant.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MenuItems", x => x.Id);
+                    table.PrimaryKey("PK_Meals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,7 +87,7 @@ namespace MyRestaurant.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
-                    MenuItemId = table.Column<long>(type: "bigint", nullable: false),
+                    MealId = table.Column<long>(type: "bigint", nullable: false),
                     MealPeriodId = table.Column<long>(type: "bigint", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     MenuId = table.Column<long>(type: "bigint", nullable: false),
@@ -135,7 +135,7 @@ namespace MyRestaurant.EF.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
                     MealPeriodId = table.Column<long>(type: "bigint", nullable: false),
-                    MenuItemId = table.Column<long>(type: "bigint", nullable: false),
+                    MealId = table.Column<long>(type: "bigint", nullable: false),
                     Count = table.Column<short>(type: "smallint", nullable: false),
                     IsReceived = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
@@ -178,10 +178,10 @@ namespace MyRestaurant.EF.Migrations
                 name: "MealPeriods");
 
             migrationBuilder.DropTable(
-                name: "MenuArticle");
+                name: "Meals");
 
             migrationBuilder.DropTable(
-                name: "MenuItems");
+                name: "MenuArticle");
 
             migrationBuilder.DropTable(
                 name: "PersonnelReservedOrderArticle");

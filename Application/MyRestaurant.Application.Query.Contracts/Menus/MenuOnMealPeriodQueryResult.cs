@@ -3,11 +3,10 @@
     public sealed class MenuOnMealPeriodQueryResult
     {
         public DateTimeOffset Date { get; set; }
-        public IEnumerable<MenuArticleOnMealPeriodQueryResult> Articles { get; set; }
+        public IEnumerable<MenuMealOnMealPeriodQueryResult> Meals { get; set; }
     }
-    public sealed class MenuArticleOnMealPeriodQueryResult
+    public sealed class MenuMealOnMealPeriodQueryResult
     {
         public long Id { get; set; }
-        public long MealId { get; set; }
     }
 }
