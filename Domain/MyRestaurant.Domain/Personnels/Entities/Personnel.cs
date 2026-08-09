@@ -30,7 +30,7 @@ namespace MyRestaurant.Domain.Personnels.Entities
         }
         public void ReserveOrders(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
         {
-            var reserve = Reserves.FirstOrDefault(ro => ro.Date == args.Date);
+            var reserve = Reserves.FirstOrDefault(ro => ro.Date == args.Date && ro.MealPeriodId == args.MealPeriodId);
             if (reserve is null)
             {
                 reserve = PersonnelReserve.Create(idGenerator, args);

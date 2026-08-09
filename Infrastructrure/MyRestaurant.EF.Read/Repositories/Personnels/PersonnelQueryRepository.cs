@@ -30,10 +30,11 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
         {
             return await dbSet.Where(p => p.Id == personnelId).SelectMany(p => p.Reserves.Where(pro =>
             pro.Date.Date.CompareTo(startDate) >= 0 &&
-            pro.Date.Date.CompareTo(endDate) <= 0)).Select(pro => new PersonnelReservedOrderOnMealPeriodQueryResult
+            pro.Date.Date.CompareTo(endDate) <= 0 &&
+            pro.MealPeriodId == mealPeriodId)).Select(pro => new PersonnelReservedOrderOnMealPeriodQueryResult
             {
                 Date = pro.Date,
-                Articles = pro.Meals.Where(proa => proa.MealPeriodId == mealPeriodId).Select(proa => new PersonnelReservedMealOnMealPeriodQueryResult
+                Articles = pro.Meals.Select(proa => new PersonnelReservedMealOnMealPeriodQueryResult
                 {
                     Id = proa.Id,
                     Count = proa.Count

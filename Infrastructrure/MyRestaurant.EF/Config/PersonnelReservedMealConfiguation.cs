@@ -11,7 +11,6 @@ namespace MyRestaurant.EF.Config
             builder.HasKey(x => new
             {
                 x.PersonnelReserveId,
-                x.MealPeriodId,
                 x.Id
             });
             builder.Property(x => x.Id).ValueGeneratedNever();

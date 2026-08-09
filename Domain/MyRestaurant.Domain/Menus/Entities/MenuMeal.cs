@@ -7,20 +7,18 @@ namespace MyRestaurant.Domain.Menus.Entities
     public class MenuMeal : AuditableEntity
     {
         // Id is MealId
-        public long MealPeriodId { get; private set; }
         public byte[] RowVersion { get; private set; }
 
         public long MenuId { get; private set; }
         public Menu Menu { get; private set; }
         private MenuMeal() { }
-        private MenuMeal(MenuMealArgs args)
+        private MenuMeal(long id)
         {
-            Id = args.Id;
-            MealPeriodId = args.MealPeriodId;
+            Id = id;
         }
-        public static MenuMeal Create(MenuMealArgs args)
+        public static MenuMeal Create(long id)
         {
-            return new MenuMeal(args);
+            return new MenuMeal(id);
         }
     }
 }

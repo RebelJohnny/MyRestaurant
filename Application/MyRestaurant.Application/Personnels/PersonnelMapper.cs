@@ -31,10 +31,10 @@ namespace MyRestaurant.Application.Personnels
             return new PersonnelReserveArgs
             {
                 Date = command.Date,
+                MealPeriodId = command.MealPeriodId,
                 Meals = [.. command.Meals.Select(a => new PersonnelReservedMealArgs
                 {
                     Id = a.Id,
-                    MealPeriodId = a.MealPeriodId,
                     Count = a.Count
                 })]
             };

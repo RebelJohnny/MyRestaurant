@@ -7,6 +7,7 @@ namespace MyRestaurant.Domain.Personnels.Entities
     public class PersonnelReserve : AuditableEntity
     {
         public DateTimeOffset Date { get; private set; }
+        public long MealPeriodId { get; private set; }
         private List<PersonnelReservedMeal> _meals = [];
         public IEnumerable<PersonnelReservedMeal> Meals => _meals;
         public byte[] RowVersion { get; private set; }
@@ -17,6 +18,7 @@ namespace MyRestaurant.Domain.Personnels.Entities
         private PersonnelReserve(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
         {
             Id = idGenerator.NextId();
+            MealPeriodId = args.MealPeriodId;
             Date = args.Date;
         }
         internal static PersonnelReserve Create(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
@@ -30,10 +32,9 @@ namespace MyRestaurant.Domain.Personnels.Entities
             _meals = newArticles;
         }
 
-        internal void Receive(long mealPeriodId)
+        internal void Receive()
         {
-            var itemsToBeReceived = Meals.Where(a => a.MealPeriodId == mealPeriodId).ToList();
-            foreach (var item in itemsToBeReceived)
+            foreach (var item in Meals)
             {
                 item.Receive();
             }
