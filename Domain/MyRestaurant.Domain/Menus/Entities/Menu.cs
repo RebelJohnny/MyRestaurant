@@ -7,6 +7,7 @@ namespace MyRestaurant.Domain.Menus.Entities
     public class Menu : AuditableEntity, IAggregateRoot
     {
         public DateTimeOffset Date { get; private set; }
+        public long MealPeriodId { get; private set; }
         private List<MenuMeal> _meals = [];
         public IReadOnlyCollection<MenuMeal> Meals => _meals;
         public byte[] RowVersion { get; private set; }
@@ -15,15 +16,16 @@ namespace MyRestaurant.Domain.Menus.Entities
         {
             Id = idGenerator.NextId();
             Date = args.Date;
-            SetArticles(args.Meals);
+            MealPeriodId = args.MealPeriodId;
+            SetMeals(args.MealIds);
         }
         public static Menu Create(ITimestampIdGenerator idGenerator, MenuArgs args)
         {
             return new Menu(idGenerator, args);
         }
-        public void SetArticles(List<MenuMealArgs> args)
+        public void SetMeals(List<long> mealIds)
         {
-            var articles = args.Select(MenuMeal.Create).ToList();
+            var articles = mealIds.Select(MenuMeal.Create).ToList();
             _meals = articles;
         }
     }

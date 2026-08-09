@@ -11,10 +11,11 @@ namespace MyRestaurant.EF.Read.Repositories.Menus
         {
             return await dbSet.Where(m =>
             m.Date.Date.CompareTo(startDate) >= 0 &&
-            m.Date.Date.CompareTo(endDate) <= 0).Select(m => new MenuOnMealPeriodQueryResult
+            m.Date.Date.CompareTo(endDate) <= 0 &&
+            m.MealPeriodId == mealPeriodId).Select(m => new MenuOnMealPeriodQueryResult
             {
                 Date = m.Date,
-                Meals = m.Meals.Where(ma => ma.MealPeriodId == mealPeriodId).Select(ma => new MenuMealOnMealPeriodQueryResult
+                Meals = m.Meals.Select(ma => new MenuMealOnMealPeriodQueryResult
                 {
                     Id = ma.Id
                 })
@@ -22,8 +23,8 @@ namespace MyRestaurant.EF.Read.Repositories.Menus
         }
         public async Task<List<long>> GetMealIdsForDayMealPeriod(DateTimeOffset date, long mealPeriodId, CancellationToken cancellationToken)
         {
-            return await dbSet.Where(m => m.Date.Date == date.Date)
-                .SelectMany(m => m.Meals.Where(ma => ma.MealPeriodId == mealPeriodId))
+            return await dbSet.Where(m => m.Date.Date == date.Date && m.MealPeriodId == mealPeriodId)
+                .SelectMany(m => m.Meals)
                 .Select(ma => ma.Id)
                 .ToListAsync(cancellationToken);
         }

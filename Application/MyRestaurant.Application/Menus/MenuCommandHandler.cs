@@ -12,7 +12,7 @@ namespace MyRestaurant.Application.Menus
     {
         public async Task Handle(UpdateMenuOnDayCommand request, CancellationToken cancellationToken)
         {
-            var menu = await repository.GetByDate(request.Date, cancellationToken);
+            var menu = await repository.GetByDateAndMealPeriod(request.Date, request.MealPeriodId, cancellationToken);
             var args = MenuMapper.Map(request);
             if (menu is null)
             {
@@ -21,7 +21,7 @@ namespace MyRestaurant.Application.Menus
             }
             else
             {
-                menu.SetArticles(args.Meals);
+                menu.SetMeals(args.MealIds);
             }
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }

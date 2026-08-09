@@ -6,7 +6,6 @@ namespace MyRestaurant.Domain.Personnels.Entities
     public class PersonnelReservedMeal : AuditableEntity
     {
         //Id is mealId
-        public long MealPeriodId { get; private set; }
         public short Count { get; private set; }
         public bool IsReceived { get; private set; }
         public byte[] RowVersion { get; private set; }
@@ -17,7 +16,6 @@ namespace MyRestaurant.Domain.Personnels.Entities
         private PersonnelReservedMeal(PersonnelReservedMealArgs args)
         {
             Id = args.Id;
-            MealPeriodId = args.MealPeriodId;
             Count = args.Count;
             IsReceived = false;
         }
