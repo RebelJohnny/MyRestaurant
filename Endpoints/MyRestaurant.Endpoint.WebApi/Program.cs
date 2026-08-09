@@ -1,5 +1,6 @@
 using MyRestaurant.Application._ConfigurationExtensions;
 using MyRestaurant.Application.Query._ConfigurationExtensions;
+using MyRestaurant.Application.Query.Reports;
 using MyRestaurant.EF._ConfigurationExtensions;
 using MyRestaurant.EF.Read._ConfigurationExtensions;
 using MyRestaurant.Framework.Data;
@@ -32,6 +33,7 @@ builder.Services.AddCors(opt =>
         builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
     });
 });
+builder.Services.AddScoped<AllPersonnelDailyReservesReportService>();
 //builder.Services.AddSwaggerUI();
 var app = builder.Build();
 

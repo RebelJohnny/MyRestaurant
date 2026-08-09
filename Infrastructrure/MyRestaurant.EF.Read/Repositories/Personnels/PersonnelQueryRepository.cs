@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyRestaurant.Application.Query.Contracts.Personnels;
+using MyRestaurant.Application.Query.Contracts.Reports.AllPersonnelDailyReserves;
 using MyRestaurant.Domain.Personnels.Entities;
 
 namespace MyRestaurant.EF.Read.Repositories.Personnels
@@ -39,6 +40,22 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
                     Count = proa.Count
                 })
             }).ToListAsync(cancellationToken);
+        }
+        public async Task<List<PersonnelReservedMealOnMealPeriodQueryResult>> GetReservesOnDayMealPeriod(DateTimeOffset date, long mealPeriodId, CancellationToken cancellationToken)
+        {
+            return await dbSet
+                .SelectMany(p => p.Reserves.Where(pr => pr.Date == date.Date))
+                .SelectMany(pr => pr.Meals.Where(prm => prm.PersonnelReserveId == mealPeriodId))
+                .Select(prm => new PersonnelReservedMealOnMealPeriodQueryResult
+                {
+                    Id = prm.Id,
+                    Count = prm.Count
+                })
+                .GroupBy(prm => prm.Id).Select(g => new PersonnelReservedMealOnMealPeriodQueryResult
+                {
+                    Id = g.Key,
+                    Count = g.Sum(prm => prm.Count)
+                }).ToListAsync(cancellationToken);
         }
     }
 }

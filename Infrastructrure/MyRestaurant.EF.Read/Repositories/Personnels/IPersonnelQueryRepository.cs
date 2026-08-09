@@ -8,5 +8,6 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
         Task<IEnumerable<PersonnelQueryResult>> GetAll(CancellationToken cancellationToken);
         Task<PersonnelFormData?> GetById(long id, CancellationToken cancellationToken);
         Task<List<PersonnelReservedOrderOnMealPeriodQueryResult>> GetReservedOrdersBetweenDates(long personnelId, DateTime startDate, DateTime endDate, long mealPeriodId, CancellationToken cancellationToken);
+        Task<List<PersonnelReservedMealOnMealPeriodQueryResult>> GetReservesOnDayMealPeriod(DateTimeOffset date, long mealPeriodId, CancellationToken cancellationToken);
     }
 }

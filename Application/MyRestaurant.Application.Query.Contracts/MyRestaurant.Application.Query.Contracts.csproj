@@ -8,10 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Stimulsoft.Reports.React" Version="2026.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\MyRestaurant.Domain\MyRestaurant.Domain.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<Content Include="Reports\**\*.mrt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
 </Project>
