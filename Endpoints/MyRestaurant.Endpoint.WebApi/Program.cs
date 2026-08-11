@@ -2,15 +2,20 @@ using MyRestaurant.Application._ConfigurationExtensions;
 using MyRestaurant.Application.Query._ConfigurationExtensions;
 using MyRestaurant.EF._ConfigurationExtensions;
 using MyRestaurant.EF.Read._ConfigurationExtensions;
+using MyRestaurant.Endpoint.WebApi.ExceptionHandlers;
 using MyRestaurant.Framework.Data;
 using MyRestaurant.Framework.Helpers;
 using MyRestaurant.Framework.HttpContext;
-using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(
+        new JsonStringEnumConverter());
+});
 // Learn more about configuring Open API at https://aka.ms/aspnet/openapi
 // FUTURE PHASES: Authentication
 builder.Services.AddHttpContextAccessor();
@@ -32,6 +37,12 @@ builder.Services.AddCors(opt =>
         builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
     });
 });
+builder.Services.AddExceptionHandler<RichExceptionHandler>();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+// And in your pipeline
+
 //builder.Services.AddSwaggerUI();
 var app = builder.Build();
 
@@ -53,6 +64,7 @@ app.UseCors(opt =>
 });
 app.UseHttpsRedirection();
 
+app.UseExceptionHandler();
 app.UseAuthorization();
 
 app.MapControllers();
