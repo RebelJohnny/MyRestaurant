@@ -1,4 +1,4 @@
-﻿namespace MyRestaurant.Framework.QueryModels
+﻿namespace MyRestaurant.Framework.Querying.Pagination
 {
     public class PaginationParams
     {
@@ -10,5 +10,5 @@
             set => pageSize = value > MaxPageSize ? MaxPageSize : value;
         }
         public int PageIndex { get; set; }
-    }    
+    }
 }

@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\Application\MyRestaurant.Application.Query\MyRestaurant.Application.Query.csproj" />
     <ProjectReference Include="..\..\Application\MyRestaurant.Application\MyRestaurant.Application.csproj" />
     <ProjectReference Include="..\..\Domain\MyRestaurant.Domain.Messages\MyRestaurant.Domain.Messages.csproj" />
+    <ProjectReference Include="..\..\Domain\MyRestaurant.DomainService\MyRestaurant.DomainService.csproj" />
     <ProjectReference Include="..\..\Framework\MyRestaurant.Framework\MyRestaurant.Framework.csproj" />
     <ProjectReference Include="..\..\Infrastructrure\MyRestaurant.EF.Read\MyRestaurant.EF.Read.csproj" />
     <ProjectReference Include="..\..\Infrastructrure\MyRestaurant.EF\MyRestaurant.EF.csproj" />

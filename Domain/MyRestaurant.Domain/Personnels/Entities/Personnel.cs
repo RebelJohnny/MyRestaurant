@@ -1,4 +1,5 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
+using MyRestaurant.Domain.Personnels.Exceptions;
 using MyRestaurant.Domain.Shared.Abstracts;
 using MyRestaurant.Framework.Helpers;
 
@@ -13,18 +14,21 @@ namespace MyRestaurant.Domain.Personnels.Entities
         public byte[] RowVersion { get; private set; }
         public bool IsDeleted { get; private set; }
         private Personnel() { }
-        private Personnel(ITimestampIdGenerator idGenerator, PersonnelArgs args)
+        private Personnel(long id, PersonnelArgs args)
         {
-            Id = idGenerator.NextId();
+            Id = id;
             Code = args.Code;
             Name = args.Name;
         }
-        public static Personnel Create(ITimestampIdGenerator idGenerator, PersonnelArgs args)
+        public static async Task<Personnel> Create(ITimestampIdGenerator idGenerator, PersonnelArgs args, IPersonnelDomainService domainService)
         {
-            return new Personnel(idGenerator, args);
+            var id = idGenerator.NextId();
+            await GuardAgainstCodeExistence(id, args.Code, domainService);
+            return new Personnel(id, args);
         }
-        public void Modify(PersonnelArgs args)
+        public async Task Modify(PersonnelArgs args, IPersonnelDomainService domainService)
         {
+            await GuardAgainstCodeExistence(Id, args.Code, domainService);
             Code = args.Code;
             Name = args.Name;
         }
@@ -45,6 +49,13 @@ namespace MyRestaurant.Domain.Personnels.Entities
         public void SoftDelete()
         {
             IsDeleted = true;
+        }
+        private static async Task GuardAgainstCodeExistence(long id, string code, IPersonnelDomainService domainService)
+        {
+            if (await domainService.CheckCodeExistence(id, code))
+            {
+                throw PersonnelExceptions.PersonnelCodeExists;
+            }
         }
     }
 }

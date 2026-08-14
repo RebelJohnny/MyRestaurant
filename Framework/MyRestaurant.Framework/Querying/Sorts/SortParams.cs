@@ -1,4 +1,4 @@
-﻿namespace MyRestaurant.Framework.QueryModels
+﻿namespace MyRestaurant.Framework.Querying.Sorts
 {
     public class SortParams
     {

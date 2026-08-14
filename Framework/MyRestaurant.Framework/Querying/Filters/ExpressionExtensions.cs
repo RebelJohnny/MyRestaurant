@@ -317,37 +317,5 @@ namespace MyRestaurant.Framework.Querying.Filters
             }
             return Expression.Lambda<Func<T, bool>>(expression, property.Parameters);
         }
-
-
-        public static Expression<Func<T, bool>> CombineWithAnd<T>(IEnumerable<Expression<Func<T, bool>>> predicates)
-        {
-            var parameter = Expression.Parameter(typeof(T), "p");
-            if (predicates == null)
-            {
-                var trueExpression = Expression.Constant(true);
-                return Expression.Lambda<Func<T, bool>>(trueExpression, parameter);
-            }
-            var combined = predicates
-                .Select(p => ReplaceParameter(p.Body, p.Parameters[0], parameter))
-                .Aggregate(Expression.AndAlso);
-
-            return Expression.Lambda<Func<T, bool>>(combined, parameter);
-        }
-
-        private static Expression ReplaceParameter(Expression expression, ParameterExpression source, ParameterExpression target)
-        {
-            return new ParameterReplacer(source, target).Visit(expression);
-        }
-
-        private class ParameterReplacer(ParameterExpression source, ParameterExpression target) : ExpressionVisitor
-        {
-            private readonly ParameterExpression _source = source ?? throw new ArgumentNullException(nameof(source));
-            private readonly ParameterExpression _target = target ?? throw new ArgumentNullException(nameof(target));
-
-            protected override Expression VisitParameter(ParameterExpression node)
-            {
-                return node == _source ? _target : base.VisitParameter(node);
-            }
-        }
     }
 }

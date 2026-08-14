@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyRestaurant.Application.Contracts.Personnels;
 using MyRestaurant.Application.Query.Contracts.Personnels;
 using MyRestaurant.Endpoint.WebApi.Models;
+using MyRestaurant.Framework.Querying;
 
 namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
 {
@@ -29,10 +30,10 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
             await mediator.Send(new DeletePersonnelCommand { Id = id }, cancellationToken);
             return Respond(ResponseModel.NoContent());
         }
-        [HttpGet]
-        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelQueryResult>>>> Get(CancellationToken cancellationToken)
+        [HttpPost("GetList")]
+        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelQueryResult>>>> Get(QueryParams queryParams, CancellationToken cancellationToken)
         {
-            var data = await mediator.Send(new GetPersonnelQuery(), cancellationToken);
+            var data = await mediator.Send(new GetPersonnelListQuery { QueryParams = queryParams }, cancellationToken);
             return Respond(ResponseModel<IEnumerable<PersonnelQueryResult>>.Ok(data));
         }
         [HttpGet("{id}")]
@@ -42,7 +43,7 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
             return Respond(ResponseModel<PersonnelFormData>.Ok(data));
         }
         [HttpGet("Reserves/{id}")]
-        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelReserveQueryResult>>>> Get(long id, [FromQuery]GetPersonnelReservedOrdersQuery query, CancellationToken cancellationToken)
+        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelReserveQueryResult>>>> Get(long id, [FromQuery] GetPersonnelReservedOrdersQuery query, CancellationToken cancellationToken)
         {
             query.PersonnelId = id;
             var data = await mediator.Send(query, cancellationToken);

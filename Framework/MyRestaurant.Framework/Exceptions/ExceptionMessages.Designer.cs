@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyRestaurant.Domain.Messages {
+namespace MyRestaurant.Framework.Exceptions {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace MyRestaurant.Domain.Messages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class RestaurantMessages {
+    internal class ExceptionMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal RestaurantMessages() {
+        internal ExceptionMessages() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyRestaurant.Domain.Messages.RestaurantMessages", typeof(RestaurantMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyRestaurant.Framework.Exceptions.ExceptionMessages", typeof(ExceptionMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace MyRestaurant.Domain.Messages {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,29 +61,56 @@ namespace MyRestaurant.Domain.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to پرسنلی با این کد قبلا تعریف شده است.
+        ///   Looks up a localized string similar to مجوز لازم برای دسترسی به منبع یا صفحه مورد نظر وجود ندارد.
         /// </summary>
-        public static string PersonnelCodeExists_ِDescription {
+        internal static string Forbidden_Description {
             get {
-                return ResourceManager.GetString("PersonnelCodeExists_ِDescription", resourceCulture);
+                return ResourceManager.GetString("Forbidden_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to خطا در ثبت پرسنل.
+        ///   Looks up a localized string similar to دسترسی غیرمجاز.
         /// </summary>
-        public static string PersonnelExceptions_Title {
+        internal static string Forbidden_Title {
             get {
-                return ResourceManager.GetString("PersonnelExceptions_Title", resourceCulture);
+                return ResourceManager.GetString("Forbidden_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to خطای پیش‌بینی نشده.
+        ///   Looks up a localized string similar to منبع مورد نظر یافت نشد.
         /// </summary>
-        public static string UnhandledException {
+        internal static string NotFound_Description {
             get {
-                return ResourceManager.GetString("UnhandledException", resourceCulture);
+                return ResourceManager.GetString("NotFound_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پیدا نشد.
+        /// </summary>
+        internal static string NotFound_Title {
+            get {
+                return ResourceManager.GetString("NotFound_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لطفا ابتدا نسبت به احراز هویت اقدام نمایید.
+        /// </summary>
+        internal static string UnAuthorized_Description {
+            get {
+                return ResourceManager.GetString("UnAuthorized_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدم احراز هویت.
+        /// </summary>
+        internal static string UnAuthorized_Title {
+            get {
+                return ResourceManager.GetString("UnAuthorized_Title", resourceCulture);
             }
         }
     }

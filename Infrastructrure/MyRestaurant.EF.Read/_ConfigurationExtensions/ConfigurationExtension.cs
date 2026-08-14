@@ -5,6 +5,7 @@ using MyRestaurant.EF.Read.Repositories.MealPeriods;
 using MyRestaurant.EF.Read.Repositories.Meals;
 using MyRestaurant.EF.Read.Repositories.Menus;
 using MyRestaurant.EF.Read.Repositories.Personnels;
+using MyRestaurant.Framework.Querying.Filters;
 
 namespace MyRestaurant.EF.Read._ConfigurationExtensions
 {
@@ -24,12 +25,14 @@ namespace MyRestaurant.EF.Read._ConfigurationExtensions
         {
             // FUTURE PHASES: Find out why the hell the service implementor didn't work here: 
             //services.AddImplementationsOf(Assembly.GetExecutingAssembly(), typeof(IQueryRepository), ServiceLifetime.Scoped);
+            //or just implement scrutor
 
             services.AddScoped<IMealPeriodQueryRepository, MealPeriodQueryRepository>();
             services.AddScoped<IMealQueryRepository, MealQueryRepository>();
             services.AddScoped<IMenuQueryRepository, MenuQueryRepository>();
             services.AddScoped<IPersonnelQueryRepository, PersonnelQueryRepository>();
 
+            services.AddTransient(typeof(IPredicateBuilder<>), typeof(PredicateBuilder<>));
             return services;
         }
     }

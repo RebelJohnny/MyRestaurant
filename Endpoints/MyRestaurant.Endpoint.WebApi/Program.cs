@@ -1,5 +1,6 @@
 using MyRestaurant.Application._ConfigurationExtensions;
 using MyRestaurant.Application.Query._ConfigurationExtensions;
+using MyRestaurant.DomainService._ConfigurationExtension;
 using MyRestaurant.EF._ConfigurationExtensions;
 using MyRestaurant.EF.Read._ConfigurationExtensions;
 using MyRestaurant.Endpoint.WebApi.ExceptionHandlers;
@@ -19,7 +20,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Learn more about configuring Open API at https://aka.ms/aspnet/openapi
 // FUTURE PHASES: Authentication
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<ContextAccessor>();
+builder.Services.AddScoped<IContextAccessor, ContextAccessor>();
 builder.Services.AddSingleton<ITimestampIdGenerator, TimestampIdGenerator>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services
@@ -29,12 +30,17 @@ builder.Services
     .AddQueryRepositories()
     .AddCommandHandlers()
     .AddQueryHandlers()
+    .AddDomainServices()
     .AddSwaggerGen();
 builder.Services.AddCors(opt =>
 {
     opt.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+        builder
+        .WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithExposedHeaders("X-Total-Count", "X-Page-Index", "X-Page-Size", "X-Total-Pages");
     });
 });
 builder.Services.AddExceptionHandler<RichExceptionHandler>();

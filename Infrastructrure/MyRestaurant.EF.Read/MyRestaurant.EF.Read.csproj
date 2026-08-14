@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\MyRestaurant.Application.Query.Contracts\MyRestaurant.Application.Query.Contracts.csproj" />
+    <ProjectReference Include="..\..\Framework\MyRestaurant.Framework\MyRestaurant.Framework.csproj" />
     <ProjectReference Include="..\MyRestaurant.EF\MyRestaurant.EF.csproj" />
   </ItemGroup>
 

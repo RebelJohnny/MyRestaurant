@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PersonnelCodeExists_ِDescription" xml:space="preserve">
-    <value>پرسنلی با این کد قبلا تعریف شده است</value>
+  <data name="Forbidden_Description" xml:space="preserve">
+    <value>مجوز لازم برای دسترسی به منبع یا صفحه مورد نظر وجود ندارد</value>
   </data>
-  <data name="PersonnelExceptions_Title" xml:space="preserve">
-    <value>خطا در ثبت پرسنل</value>
+  <data name="Forbidden_Title" xml:space="preserve">
+    <value>دسترسی غیرمجاز</value>
   </data>
-  <data name="UnhandledException" xml:space="preserve">
-    <value>خطای پیش‌بینی نشده</value>
+  <data name="NotFound_Description" xml:space="preserve">
+    <value>منبع مورد نظر یافت نشد</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>پیدا نشد</value>
+  </data>
+  <data name="UnAuthorized_Description" xml:space="preserve">
+    <value>لطفا ابتدا نسبت به احراز هویت اقدام نمایید</value>
+  </data>
+  <data name="UnAuthorized_Title" xml:space="preserve">
+    <value>عدم احراز هویت</value>
   </data>
 </root>

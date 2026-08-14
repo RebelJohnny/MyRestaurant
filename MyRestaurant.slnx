@@ -8,6 +8,7 @@
   <Folder Name="/Domain/">
     <Project Path="Domain/MyRestaurant.Domain.Messages/MyRestaurant.Domain.Messages.csproj" Id="59702802-1d0e-4f80-91d9-e691298ce99e" />
     <Project Path="Domain/MyRestaurant.Domain/MyRestaurant.Domain.csproj" />
+    <Project Path="Domain/MyRestaurant.DomainService/MyRestaurant.DomainService.csproj" Id="306af856-d755-424d-89c9-d8799debaaf3" />
   </Folder>
   <Folder Name="/Endpoints/">
     <Project Path="Endpoints/MyRestaurant.Endpoint.WebApi/MyRestaurant.Endpoint.WebApi.csproj" />
