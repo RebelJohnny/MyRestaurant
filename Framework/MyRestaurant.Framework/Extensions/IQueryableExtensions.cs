@@ -12,12 +12,23 @@ namespace MyRestaurant.Framework.Extensions
                 ? query
                 : query.Skip(pageIndex * pageSize).Take(pageSize);
         }
-        public static IQueryable<T> ApplySorting<T>(this IQueryable<T> query, IEnumerable<SortParams> sorts)
+        public static IQueryable<T> ApplySorting<T>(this IQueryable<T> query, IEnumerable<SortParams> sorts, string? defaultSortField = null)
         {
             var sortList = sorts.ToList();
             if (sortList.Count == 0)
             {
-                return query;
+                if (string.IsNullOrEmpty(defaultSortField))
+                {
+                    return query;
+                }
+                else
+                {
+                    sortList.Add(new SortParams
+                    {
+                        Field = defaultSortField,
+                        IsDescending = true
+                    });
+                }
             }
             Expression finalResult = query.Expression;
 
@@ -54,7 +65,7 @@ namespace MyRestaurant.Framework.Extensions
                         : nameof(Queryable.ThenBy);
                 }
 
-                finalResult = Expression.Call(typeof(Queryable), methodName, [typeof(T), type], query.Expression, Expression.Quote(lambda));
+                finalResult = Expression.Call(typeof(Queryable), methodName, [typeof(T), type], finalResult, Expression.Quote(lambda));
                 isFirst = false;
             }
 

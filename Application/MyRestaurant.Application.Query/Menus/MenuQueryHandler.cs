@@ -27,7 +27,7 @@ namespace MyRestaurant.Application.Query.Menus
                     menuForWeek.Add(new MenuQueryResult
                     {
                         Date = i,
-                        DayOfWeek = i.DayOfWeek,
+                        DayOfWeek = (int)i.DayOfWeek,
                         Meals = []
                     });
                 }

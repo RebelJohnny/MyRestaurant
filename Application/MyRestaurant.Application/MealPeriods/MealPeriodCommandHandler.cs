@@ -2,6 +2,7 @@
 using MyRestaurant.Domain.MealPeriods;
 using MyRestaurant.Domain.MealPeriods.Entities;
 using MyRestaurant.Framework.Data;
+using MyRestaurant.Framework.Exceptions;
 using MyRestaurant.Framework.Helpers;
 using MyRestaurant.Framework.Mediator;
 
@@ -25,7 +26,7 @@ namespace MyRestaurant.Application.MealPeriods
 
         public async Task Handle(UpdateMealPeriodCommand request, CancellationToken cancellationToken)
         {
-            var mealPeriod = await repository.GetById(request.Id);
+            var mealPeriod = await repository.GetById(request.Id) ?? throw Error.NotFound;
             var args = MealPeriodMapper.Map(request);
             mealPeriod.Modify(args);
             await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -33,21 +34,21 @@ namespace MyRestaurant.Application.MealPeriods
 
         public async Task Handle(DeleteMealPeriodCommand request, CancellationToken cancellationToken)
         {
-            var mealPeriod = await repository.GetById(request.Id);
+            var mealPeriod = await repository.GetById(request.Id) ?? throw Error.NotFound;
             mealPeriod.SoftDelete();
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         public async Task Handle(ActivateMealPeriodCommand request, CancellationToken cancellationToken)
         {
-            var mealPeriod = await repository.GetById(request.Id);
+            var mealPeriod = await repository.GetById(request.Id) ?? throw Error.NotFound;
             mealPeriod.Activate();
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         public async Task Handle(DeactivateMealPeriodCommand request, CancellationToken cancellationToken)
         {
-            var mealPeriod = await repository.GetById(request.Id);
+            var mealPeriod = await repository.GetById(request.Id) ?? throw Error.NotFound;
             mealPeriod.Deactivate();
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }

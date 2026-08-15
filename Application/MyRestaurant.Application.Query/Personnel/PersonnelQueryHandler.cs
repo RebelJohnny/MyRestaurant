@@ -11,7 +11,8 @@ namespace MyRestaurant.Application.Query.Personnel
     internal class PersonnelQueryHandler(IPersonnelQueryRepository repository, IMealQueryRepository mealRepository, IContextAccessor contextAccessor) :
         IQueryHandler<GetPersonnelFormDataQuery, PersonnelFormData>,
         IQueryHandler<GetPersonnelListQuery, IEnumerable<PersonnelQueryResult>>,
-        IQueryHandler<GetPersonnelReservedOrdersQuery, IEnumerable<PersonnelReserveQueryResult>>
+        IQueryHandler<GetPersonnelReservedOrdersQuery, IEnumerable<PersonnelReserveQueryResult>>,
+        IQueryHandler<GetAllPersonnelsQuery, IEnumerable<PersonnelQueryResult>>
     {
         public async Task<PersonnelFormData> Handle(GetPersonnelFormDataQuery request, CancellationToken cancellationToken)
         {
@@ -22,7 +23,7 @@ namespace MyRestaurant.Application.Query.Personnel
         public async Task<IEnumerable<PersonnelQueryResult>> Handle(GetPersonnelListQuery request, CancellationToken cancellationToken)
         {
             var list = await repository.GetList(request.QueryParams, cancellationToken);
-            contextAccessor.AddPaginationHeader(list.PageMetaData);
+            contextAccessor.AddPaginationHeaders(list.PageMetaData);
             return list.Items;
         }
 
@@ -43,12 +44,17 @@ namespace MyRestaurant.Application.Query.Personnel
                     reservedOrdersForWeek.Add(new PersonnelReserveQueryResult
                     {
                         Date = i,
-                        DayOfWeek = i.DayOfWeek,
+                        DayOfWeek = (int)i.DayOfWeek,
                         Meals = []
                     });
                 }
             }
             return reservedOrdersForWeek.OrderBy(x => x.Date);
+        }
+
+        public async Task<IEnumerable<PersonnelQueryResult>> Handle(GetAllPersonnelsQuery request, CancellationToken cancellationToken)
+        {
+            return await repository.GetAll(cancellationToken);
         }
     }
 }

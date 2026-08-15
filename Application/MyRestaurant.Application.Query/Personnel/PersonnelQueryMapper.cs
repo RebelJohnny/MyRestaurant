@@ -10,7 +10,7 @@ namespace MyRestaurant.Application.Query.Personnel
             return [.. reservedOrders.Select(ro => new PersonnelReserveQueryResult
             {
                 Date = ro.Date,
-                DayOfWeek = ro.Date.DayOfWeek,
+                DayOfWeek = (int)ro.Date.DayOfWeek,
                 Meals = ro.Articles.Select(roa =>
                 {
                     var meal = meals.First(m => m.Id == roa.Id);

@@ -52,6 +52,10 @@ builder.Services.AddProblemDetails();
 //builder.Services.AddSwaggerUI();
 var app = builder.Build();
 
+app.UseExceptionHandler(new ExceptionHandlerOptions()
+{
+    AllowStatusCode404Response = true
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -70,7 +74,6 @@ app.UseCors(opt =>
 });
 app.UseHttpsRedirection();
 
-app.UseExceptionHandler();
 app.UseAuthorization();
 
 app.MapControllers();

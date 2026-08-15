@@ -2,6 +2,7 @@
 using MyRestaurant.Domain.Meals;
 using MyRestaurant.Domain.Meals.Entities;
 using MyRestaurant.Framework.Data;
+using MyRestaurant.Framework.Exceptions;
 using MyRestaurant.Framework.Helpers;
 using MyRestaurant.Framework.Mediator;
 
@@ -23,7 +24,7 @@ namespace MyRestaurant.Application.Meals
 
         public async Task Handle(UpdateMealCommand request, CancellationToken cancellationToken)
         {
-            var meal = await repository.GetById(request.Id);
+            var meal = await repository.GetById(request.Id) ?? throw Error.NotFound;
             var args = MealMapper.Map(request);
             meal.Modify(args);
             await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -31,7 +32,7 @@ namespace MyRestaurant.Application.Meals
 
         public async Task Handle(DeleteMealCommand request, CancellationToken cancellationToken)
         {
-            var meal = await repository.GetById(request.Id);
+            var meal = await repository.GetById(request.Id) ?? throw Error.NotFound;
             meal.SoftDelete();
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }

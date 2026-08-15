@@ -34,9 +34,20 @@ namespace MyRestaurant.Domain.Personnels.Entities
 
         internal void Receive()
         {
-            foreach (var item in Meals)
+            try
             {
-                item.Receive();
+                foreach (var item in Meals)
+                {
+                    item.Receive();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+
             }
         }
     }

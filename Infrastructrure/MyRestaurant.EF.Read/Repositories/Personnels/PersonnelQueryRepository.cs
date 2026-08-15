@@ -32,7 +32,7 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
                     CreatedAt = p.CreatedAt
                 })
                 .Where(predicate)
-                .ApplySorting(queryParams.Sorts);
+                .ApplySorting(queryParams.Sorts, nameof(PersonnelQueryResult.CreatedAt));
             var totalCount = await query.CountAsync(cancellationToken);
             var items = await query.ApplyPaging(queryParams.PaginationParams.PageIndex, queryParams.PaginationParams.PageSize).ToListAsync(cancellationToken);
             return new PagedResult<PersonnelQueryResult>(queryParams.PaginationParams.PageIndex, queryParams.PaginationParams.PageSize, totalCount, items);
@@ -56,6 +56,17 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
         public async Task<bool> CheckCodeExistence(long id, string code)
         {
             return await context.Personnels.AnyAsync(p => p.Id != id && p.Code.Trim() == code.Trim());
+        }
+        public async Task<List<PersonnelQueryResult>> GetAll(CancellationToken cancellationToken)
+        {
+            return await dbSet
+                .Select(p => new PersonnelQueryResult
+                {
+                    Id = p.Id,
+                    Code = p.Code,
+                    Name = p.Name,
+                    CreatedAt = p.CreatedAt
+                }).OrderByDescending(p => p.CreatedAt).ToListAsync(cancellationToken);
         }
     }
 }

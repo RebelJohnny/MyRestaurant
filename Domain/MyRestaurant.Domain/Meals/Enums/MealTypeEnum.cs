@@ -2,6 +2,7 @@
 {
     public enum MealTypeEnum : short
     {
+        None,
         Food,
         Dessert
     }

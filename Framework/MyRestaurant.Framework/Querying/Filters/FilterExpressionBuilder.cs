@@ -53,9 +53,63 @@ namespace MyRestaurant.Framework.Querying.Filters
                 _ => throw new NotImplementedException()
             };
         }
-        private static Expression<Func<T, bool>> BuildInt32Filter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn)
+        private static Expression<Func<T, bool>> BuildInt16Filter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn, bool isNullable)
         {
-            var propertyExpression = Expression.Lambda<Func<T, int?>>(property, parameter);
+            if (isNullable)
+            {
+                var nullablePropertyExpression = Expression.Lambda<Func<T, short?>>(property, parameter);
+                return filterFn switch
+                {
+                    FilterFn.Equals => ExpressionExtensions.Equal(nullablePropertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.NotEquals => ExpressionExtensions.NotEqual(nullablePropertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.Between => ExpressionExtensions.Between(nullablePropertyExpression, element.Deserialize<short[]>().First(), element.Deserialize<short[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                    FilterFn.BetweenInclusive => ExpressionExtensions.BetweenInclusive(nullablePropertyExpression, element.Deserialize<short[]>().First(), element.Deserialize<short[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                    FilterFn.GreaterThan => ExpressionExtensions.GreaterThan(nullablePropertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.GreaterThanOrEqualTo => ExpressionExtensions.GreaterThanOrEqual(nullablePropertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.LessThan => ExpressionExtensions.LessThan(nullablePropertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.LessThanOrEqualTo => ExpressionExtensions.LessThanOrEqual(nullablePropertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.Empty => ExpressionExtensions.IsNull(nullablePropertyExpression),
+                    FilterFn.NotEmpty => ExpressionExtensions.IsNotNull(nullablePropertyExpression),
+                    _ => throw new NotImplementedException(),
+                };
+            }
+            var propertyExpression = Expression.Lambda<Func<T, short>>(property, parameter);
+            return filterFn switch
+            {
+                FilterFn.Equals => ExpressionExtensions.Equal(propertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                FilterFn.NotEquals => ExpressionExtensions.NotEqual(propertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                FilterFn.Between => ExpressionExtensions.Between(propertyExpression, element.Deserialize<short[]>().First(), element.Deserialize<short[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                FilterFn.BetweenInclusive => ExpressionExtensions.BetweenInclusive(propertyExpression, element.Deserialize<short[]>().First(), element.Deserialize<short[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                FilterFn.GreaterThan => ExpressionExtensions.GreaterThan(propertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                FilterFn.GreaterThanOrEqualTo => ExpressionExtensions.GreaterThanOrEqual(propertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                FilterFn.LessThan => ExpressionExtensions.LessThan(propertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                FilterFn.LessThanOrEqualTo => ExpressionExtensions.LessThanOrEqual(propertyExpression, element.GetInt16()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                FilterFn.Empty => ExpressionExtensions.IsNull(propertyExpression),
+                FilterFn.NotEmpty => ExpressionExtensions.IsNotNull(propertyExpression),
+                _ => throw new NotImplementedException(),
+            };
+        }
+        private static Expression<Func<T, bool>> BuildInt32Filter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn, bool isNullable)
+        {
+            if (isNullable)
+            {
+                var nullablePropertyExpression = Expression.Lambda<Func<T, int?>>(property, parameter);
+                return filterFn switch
+                {
+                    FilterFn.Equals => ExpressionExtensions.Equal(nullablePropertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.NotEquals => ExpressionExtensions.NotEqual(nullablePropertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.Between => ExpressionExtensions.Between(nullablePropertyExpression, element.Deserialize<int[]>().First(), element.Deserialize<int[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                    FilterFn.BetweenInclusive => ExpressionExtensions.BetweenInclusive(nullablePropertyExpression, element.Deserialize<int[]>().First(), element.Deserialize<int[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                    FilterFn.GreaterThan => ExpressionExtensions.GreaterThan(nullablePropertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.GreaterThanOrEqualTo => ExpressionExtensions.GreaterThanOrEqual(nullablePropertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.LessThan => ExpressionExtensions.LessThan(nullablePropertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.LessThanOrEqualTo => ExpressionExtensions.LessThanOrEqual(nullablePropertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.Empty => ExpressionExtensions.IsNull(nullablePropertyExpression),
+                    FilterFn.NotEmpty => ExpressionExtensions.IsNotNull(nullablePropertyExpression),
+                    _ => throw new NotImplementedException(),
+                };
+            }
+            var propertyExpression = Expression.Lambda<Func<T, int>>(property, parameter);
             return filterFn switch
             {
                 FilterFn.Equals => ExpressionExtensions.Equal(propertyExpression, element.GetInt32()) ?? throw FilterExceptions.InvalidNumericFilterException,
@@ -71,9 +125,27 @@ namespace MyRestaurant.Framework.Querying.Filters
                 _ => throw new NotImplementedException(),
             };
         }
-        private static Expression<Func<T, bool>> BuildInt64Filter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn)
+        private static Expression<Func<T, bool>> BuildInt64Filter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn, bool isNullable)
         {
-            var propertyExpression = Expression.Lambda<Func<T, long?>>(property, parameter);
+            if (isNullable)
+            {
+                var nullablePropertyExpression = Expression.Lambda<Func<T, long?>>(property, parameter);
+                return filterFn switch
+                {
+                    FilterFn.Equals => ExpressionExtensions.Equal(nullablePropertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.NotEquals => ExpressionExtensions.NotEqual(nullablePropertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.Between => ExpressionExtensions.Between(nullablePropertyExpression, element.Deserialize<long[]>().First(), element.Deserialize<long[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                    FilterFn.BetweenInclusive => ExpressionExtensions.BetweenInclusive(nullablePropertyExpression, element.Deserialize<long[]>().First(), element.Deserialize<long[]>().Last()) ?? throw FilterExceptions.InvalidNumericArrayFilterException,
+                    FilterFn.GreaterThan => ExpressionExtensions.GreaterThan(nullablePropertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.GreaterThanOrEqualTo => ExpressionExtensions.GreaterThanOrEqual(nullablePropertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.LessThan => ExpressionExtensions.LessThan(nullablePropertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.LessThanOrEqualTo => ExpressionExtensions.LessThanOrEqual(nullablePropertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
+                    FilterFn.Empty => ExpressionExtensions.IsNull(nullablePropertyExpression),
+                    FilterFn.NotEmpty => ExpressionExtensions.IsNotNull(nullablePropertyExpression),
+                    _ => throw new NotImplementedException(),
+                };
+            }
+            var propertyExpression = Expression.Lambda<Func<T, long>>(property, parameter);
             return filterFn switch
             {
                 FilterFn.Equals => ExpressionExtensions.Equal(propertyExpression, element.GetInt64()) ?? throw FilterExceptions.InvalidNumericFilterException,
@@ -89,8 +161,26 @@ namespace MyRestaurant.Framework.Querying.Filters
                 _ => throw new NotImplementedException(),
             };
         }
-        private static Expression<Func<T, bool>> BuildDateTimeFilter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn)
+        private static Expression<Func<T, bool>> BuildDateTimeFilter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn, bool isNullable)
         {
+            if (isNullable)
+            {
+                var nullablePropertyExpression = Expression.Lambda<Func<T, DateTime?>>(property, parameter);
+                return filterFn switch
+                {
+                    FilterFn.Equals => ExpressionExtensions.Equal(nullablePropertyExpression, element.GetDateTime()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.NotEquals => ExpressionExtensions.NotEqual(nullablePropertyExpression, element.GetDateTime()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.Between => ExpressionExtensions.Between(nullablePropertyExpression, element.Deserialize<DateTime[]>().First(), element.Deserialize<DateTime[]>().Last()) ?? throw FilterExceptions.InvalidDateArrayFilterException,
+                    FilterFn.BetweenInclusive => ExpressionExtensions.BetweenInclusive(nullablePropertyExpression, element.Deserialize<DateTime[]>().First(), element.Deserialize<DateTime[]>().Last()) ?? throw FilterExceptions.InvalidDateArrayFilterException,
+                    FilterFn.GreaterThan => ExpressionExtensions.GreaterThan(nullablePropertyExpression, element.GetDateTime()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.GreaterThanOrEqualTo => ExpressionExtensions.GreaterThanOrEqual(nullablePropertyExpression, element.GetDateTime()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.LessThan => ExpressionExtensions.LessThan(nullablePropertyExpression, element.GetDateTime()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.LessThanOrEqualTo => ExpressionExtensions.LessThanOrEqual(nullablePropertyExpression, element.GetDateTime()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.Empty => ExpressionExtensions.IsNull(nullablePropertyExpression),
+                    FilterFn.NotEmpty => ExpressionExtensions.IsNotNull(nullablePropertyExpression),
+                    _ => throw new NotImplementedException(),
+                };
+            }
             var propertyExpression = Expression.Lambda<Func<T, DateTime?>>(property, parameter);
             return filterFn switch
             {
@@ -107,8 +197,26 @@ namespace MyRestaurant.Framework.Querying.Filters
                 _ => throw new NotImplementedException(),
             };
         }
-        private static Expression<Func<T, bool>> BuildDateTimeOffsetFilter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn)
+        private static Expression<Func<T, bool>> BuildDateTimeOffsetFilter(ParameterExpression parameter, MemberExpression property, JsonElement element, FilterFn filterFn, bool isNullable)
         {
+            if (isNullable)
+            {
+                var nullablePropertyExpression = Expression.Lambda<Func<T, DateTimeOffset?>>(property, parameter);
+                return filterFn switch
+                {
+                    FilterFn.Equals => ExpressionExtensions.Equal(nullablePropertyExpression, element.GetDateTimeOffset()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.NotEquals => ExpressionExtensions.NotEqual(nullablePropertyExpression, element.GetDateTimeOffset()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.Between => ExpressionExtensions.Between(nullablePropertyExpression, element.Deserialize<DateTimeOffset[]>().First(), element.Deserialize<DateTimeOffset[]>().Last()) ?? throw FilterExceptions.InvalidDateArrayFilterException,
+                    FilterFn.BetweenInclusive => ExpressionExtensions.BetweenInclusive(nullablePropertyExpression, element.Deserialize<DateTimeOffset[]>().First(), element.Deserialize<DateTimeOffset[]>().Last()) ?? throw FilterExceptions.InvalidDateArrayFilterException,
+                    FilterFn.GreaterThan => ExpressionExtensions.GreaterThan(nullablePropertyExpression, element.GetDateTimeOffset()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.GreaterThanOrEqualTo => ExpressionExtensions.GreaterThanOrEqual(nullablePropertyExpression, element.GetDateTimeOffset()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.LessThan => ExpressionExtensions.LessThan(nullablePropertyExpression, element.GetDateTimeOffset()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.LessThanOrEqualTo => ExpressionExtensions.LessThanOrEqual(nullablePropertyExpression, element.GetDateTimeOffset()) ?? throw FilterExceptions.InvalidDateFilterException,
+                    FilterFn.Empty => ExpressionExtensions.IsNull(nullablePropertyExpression),
+                    FilterFn.NotEmpty => ExpressionExtensions.IsNotNull(nullablePropertyExpression),
+                    _ => throw new NotImplementedException(),
+                };
+            }
             var propertyExpression = Expression.Lambda<Func<T, DateTimeOffset?>>(property, parameter);
             return filterFn switch
             {
@@ -141,14 +249,14 @@ namespace MyRestaurant.Framework.Querying.Filters
                 {
                     propertyTypeName = Nullable.GetUnderlyingType(property.Type).Name;
                 }
-
                 Expression<Func<T, bool>> expression = propertyTypeName switch
                 {
                     "String" => PredicateBuilder<T>.BuildStringFilter(parameter, property, filter.Value, filter.FilterFn),
-                    "Int32" => PredicateBuilder<T>.BuildInt32Filter(parameter, property, filter.Value, filter.FilterFn),
-                    "Int64" => PredicateBuilder<T>.BuildInt64Filter(parameter, property, filter.Value, filter.FilterFn),
-                    "DateTime" => PredicateBuilder<T>.BuildDateTimeFilter(parameter, property, filter.Value, filter.FilterFn),
-                    "DateTimeOffset" => PredicateBuilder<T>.BuildDateTimeOffsetFilter(parameter, property, filter.Value, filter.FilterFn),
+                    "Int16" => PredicateBuilder<T>.BuildInt16Filter(parameter, property, filter.Value, filter.FilterFn, isNullable),
+                    "Int32" => PredicateBuilder<T>.BuildInt32Filter(parameter, property, filter.Value, filter.FilterFn, isNullable),
+                    "Int64" => PredicateBuilder<T>.BuildInt64Filter(parameter, property, filter.Value, filter.FilterFn, isNullable),
+                    "DateTime" => PredicateBuilder<T>.BuildDateTimeFilter(parameter, property, filter.Value, filter.FilterFn, isNullable),
+                    "DateTimeOffset" => PredicateBuilder<T>.BuildDateTimeOffsetFilter(parameter, property, filter.Value, filter.FilterFn, isNullable),
                     _ => throw new ArgumentOutOfRangeException(),
                 };
                 filters.Add(expression);

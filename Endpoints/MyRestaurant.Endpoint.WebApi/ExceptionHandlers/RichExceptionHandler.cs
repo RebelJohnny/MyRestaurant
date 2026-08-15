@@ -13,7 +13,7 @@ namespace MyRestaurant.Endpoint.WebApi.ExceptionHandlers
                 return false;
             }
 
-            logger.LogError(exception, "Unhandled exception occurred");
+            logger.LogError(exception, "richException occurred");
 
             httpContext.Response.StatusCode = richException.StatusCode;
 
@@ -29,7 +29,24 @@ namespace MyRestaurant.Endpoint.WebApi.ExceptionHandlers
                 }
             };
 
-            return await problemDetailsService.TryWriteAsync(context);
+            //var result = await problemDetailsService.TryWriteAsync(context);
+
+            //logger.LogInformation(
+            //    "ProblemDetails written: {Result}, Status: {StatusCode}",
+            //    result,
+            //    httpContext.Response.StatusCode);
+
+            //return result;
+            await httpContext.Response.WriteAsJsonAsync(
+            new
+            {
+                title = richException.Title,
+                status = richException.StatusCode,
+                detail = richException.Message
+            },
+            cancellationToken);
+
+            return true;
         }
     }
 }

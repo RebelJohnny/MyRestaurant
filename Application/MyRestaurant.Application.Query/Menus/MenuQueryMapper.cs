@@ -10,7 +10,7 @@ namespace MyRestaurant.Application.Query.Menus
             return [.. menus.Select(m => new MenuQueryResult
             {
                 Date = m.Date,
-                DayOfWeek = m.Date.DayOfWeek,
+                DayOfWeek = (int)m.Date.DayOfWeek,
                 Meals = m.Meals.Select(ma =>
                 {
                     var meal = meals.First(x => x.Id == ma.Id);

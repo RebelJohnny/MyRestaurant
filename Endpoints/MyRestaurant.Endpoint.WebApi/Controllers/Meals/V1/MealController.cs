@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyRestaurant.Application.Contracts.Meals;
 using MyRestaurant.Application.Query.Contracts.Meals;
 using MyRestaurant.Endpoint.WebApi.Models;
+using MyRestaurant.Framework.Querying;
 
 namespace MyRestaurant.Endpoint.WebApi.Controllers.Meals.V1
 {
@@ -29,10 +30,10 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Meals.V1
             await mediator.Send(new DeleteMealCommand { Id = id }, cancellationToken);
             return Respond(ResponseModel.NoContent());
         }
-        [HttpGet]
-        public async Task<ActionResult<ResponseModel<IEnumerable<MealQueryResult>>>> Get(CancellationToken cancellationToken)
+        [HttpPost("GetList")]
+        public async Task<ActionResult<ResponseModel<IEnumerable<MealQueryResult>>>> Get(QueryParams queryParams, CancellationToken cancellationToken)
         {
-            var data = await mediator.Send(new GetMealsQuery(), cancellationToken);
+            var data = await mediator.Send(new GetMealListQuery { QueryParams = queryParams }, cancellationToken);
             return Respond(ResponseModel<IEnumerable<MealQueryResult>>.Ok(data));
         }
         [HttpGet("{id}")]
@@ -40,6 +41,12 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Meals.V1
         {
             var data = await mediator.Send(new GetMealFormDataQuery { Id = id }, cancellationToken);
             return Respond(ResponseModel<MealFormData>.Ok(data));
+        }
+        [HttpGet]
+        public async Task<ActionResult<ResponseModel<IEnumerable<MealQueryResult>>>> Get(CancellationToken cancellationToken)
+        {
+            var data = await mediator.Send(new GetAllMealsQuery(), cancellationToken);
+            return Respond(ResponseModel<IEnumerable<MealQueryResult>>.Ok(data));
         }
     }
 }

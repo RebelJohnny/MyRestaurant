@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyRestaurant.Application.Contracts.MealPeriods;
 using MyRestaurant.Application.Query.Contracts.MealPeriods;
 using MyRestaurant.Endpoint.WebApi.Models;
+using MyRestaurant.Framework.Querying;
 
 namespace MyRestaurant.Endpoint.WebApi.Controllers.MealPeriods.V1
 {
@@ -41,17 +42,23 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.MealPeriods.V1
             await mediator.Send(new DeactivateMealPeriodCommand { Id = id }, cancellationToken);
             return Respond(ResponseModel.Ok());
         }
-        [HttpGet]
-        public async Task<ActionResult<ResponseModel<IEnumerable<MealPeriodQueryResult>>>> Get(CancellationToken cancellationToken)
+        [HttpPost("GetList")]
+        public async Task<ActionResult<ResponseModel<IEnumerable<MealPeriodQueryResult>>>> Get(QueryParams queryParams, CancellationToken cancellationToken)
         {
-            var data = await mediator.Send(new GetAllMealPeriodsQuery(), cancellationToken);
+            var data = await mediator.Send(new GetMealPeriodListQuery { QueryParams = queryParams }, cancellationToken);
             return Respond(ResponseModel<IEnumerable<MealPeriodQueryResult>>.Ok(data));
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseModel<MealPeriodQueryResult>>> Get(long id, CancellationToken cancellationToken)
         {
             var data = await mediator.Send(new GetMealPeriodFormDataQuery { Id = id }, cancellationToken);
-            return Respond(ResponseModel<MealPeriodQueryResult>.Ok(data)); 
+            return Respond(ResponseModel<MealPeriodQueryResult>.Ok(data));
+        }
+        [HttpGet]
+        public async Task<ActionResult<ResponseModel<IEnumerable<MealPeriodQueryResult>>>> Get(CancellationToken cancellationToken)
+        {
+            var data = await mediator.Send(new GetAllMealPeriodsQuery(), cancellationToken);
+            return Respond(ResponseModel<IEnumerable<MealPeriodQueryResult>>.Ok(data));
         }
     }
 }

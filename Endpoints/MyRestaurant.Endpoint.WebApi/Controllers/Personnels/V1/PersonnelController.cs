@@ -56,5 +56,11 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
             await mediator.Send(command, cancellationToken);
             return Respond(ResponseModel.Ok());
         }
+        [HttpGet]
+        public async Task<ActionResult<ResponseModel<IEnumerable<PersonnelQueryResult>>>> Get(CancellationToken cancellationToken)
+        {
+            var data = await mediator.Send(new GetAllPersonnelsQuery(), cancellationToken);
+            return Respond(ResponseModel<IEnumerable<PersonnelQueryResult>>.Ok(data));
+        }
     }
 }

@@ -4,6 +4,6 @@ namespace MyRestaurant.Framework.HttpContext
 {
     public interface IContextAccessor
     {
-        void AddPaginationHeader(PageMetadata pageMetadata);
+        void AddPaginationHeaders(PageMetadata pageMetadata);
     }
 }
