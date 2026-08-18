@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MyRestaurant.Domain.Messages;
+using MyRestaurant.Framework.Exceptions;
 
 namespace MyRestaurant.Endpoint.WebApi.ExceptionHandlers
 {
@@ -16,17 +17,27 @@ namespace MyRestaurant.Endpoint.WebApi.ExceptionHandlers
                 _ => StatusCodes.Status500InternalServerError
             };
 
-            return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+            //return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+            //{
+            //    HttpContext = httpContext,
+            //    Exception = exception,
+            //    ProblemDetails = new ProblemDetails
+            //    {
+            //        Type = exception.GetType().Name,
+            //        Title = RestaurantMessages.UnhandledException,
+            //        Detail = exception.Message
+            //    }
+            //});
+            await httpContext.Response.WriteAsJsonAsync(
+            new
             {
-                HttpContext = httpContext,
-                Exception = exception,
-                ProblemDetails = new ProblemDetails
-                {
-                    Type = exception.GetType().Name,
-                    Title = RestaurantMessages.UnhandledException,
-                    Detail = exception.Message
-                }
-            });
+                title = RestaurantMessages.UnhandledException,
+                status = httpContext.Response.StatusCode,
+                detail = exception.Message
+            },
+            cancellationToken);
+
+            return true;
         }
     }
 }
