@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using MyRestaurant.Framework.Data.Exceptions;
 using MyRestaurant.Framework.Extensions;
 
 namespace MyRestaurant.Framework.Data
@@ -7,8 +9,31 @@ namespace MyRestaurant.Framework.Data
     {
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            NormalizeStrings();
-            return await context.SaveChangesAsync(cancellationToken);
+            //NormalizeStrings();
+            try
+            {
+                return await context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw DatabaseExceptions.Concurrency;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is SqlException sqlException)
+                {
+                    throw sqlException.Number switch
+                    {
+                        2601 or 2627 => DatabaseExceptions.Duplicate,
+                        547 => DatabaseExceptions.ForeignKeyViolation,
+                        515 => DatabaseExceptions.RequiredValue,
+                        2628 => DatabaseExceptions.ValueTooLong,
+                        _ => DatabaseExceptions.Unknown
+                    };
+                }
+
+                throw DatabaseExceptions.Unknown;
+            }
         }
         private void NormalizeStrings()
         {

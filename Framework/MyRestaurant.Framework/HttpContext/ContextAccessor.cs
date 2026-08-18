@@ -11,6 +11,7 @@ namespace MyRestaurant.Framework.HttpContext
             httpContextAccessor.HttpContext.Response.Headers.Add("X-Page-Index", pageMetadata.PageIndex.ToString());
             httpContextAccessor.HttpContext.Response.Headers.Add("X-Page-Size", pageMetadata.PageSize.ToString());
             httpContextAccessor.HttpContext.Response.Headers.Add("X-Total-Pages", pageMetadata.PageSize.ToString());
+            httpContextAccessor.HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "X-Total-Count, X-Page-Index, X-Page-Size, X-Total-Pages");
         }
     }
 }

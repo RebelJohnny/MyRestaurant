@@ -61,6 +61,114 @@ namespace MyRestaurant.Framework.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مشکلی در پایگاه داده رخ داده است.
+        /// </summary>
+        internal static string Database_Description {
+            get {
+                return ResourceManager.GetString("Database_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطای پایگاه داده.
+        /// </summary>
+        internal static string Database_Title {
+            get {
+                return ResourceManager.GetString("Database_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to این اطلاعات توسط کاربر دیگری تغییر کرده است. لطفا اطلاعات را مجدد دریافت کنید.
+        /// </summary>
+        internal static string DatabaseConcurrency_Description {
+            get {
+                return ResourceManager.GetString("DatabaseConcurrency_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اطلاعات تغییر کرده است.
+        /// </summary>
+        internal static string DatabaseConcurrency_Title {
+            get {
+                return ResourceManager.GetString("DatabaseConcurrency_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یکی از اطلاعات مورد نیاز وارد نشده است.
+        /// </summary>
+        internal static string DatabaseDataRequired_Description {
+            get {
+                return ResourceManager.GetString("DatabaseDataRequired_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطای الزام ورود اطلاعات.
+        /// </summary>
+        internal static string DatabaseDataRequired_Title {
+            get {
+                return ResourceManager.GetString("DatabaseDataRequired_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to یکی از مقادیر وارد شده بیش از حد مجاز است.
+        /// </summary>
+        internal static string DatabaseDataTooLong_Description {
+            get {
+                return ResourceManager.GetString("DatabaseDataTooLong_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطای اطلاعات.
+        /// </summary>
+        internal static string DatabaseDataTooLong_Title {
+            get {
+                return ResourceManager.GetString("DatabaseDataTooLong_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to این مقدار قبلا ثبت شده است.
+        /// </summary>
+        internal static string DatabaseDuplicate_Description {
+            get {
+                return ResourceManager.GetString("DatabaseDuplicate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطای داده.
+        /// </summary>
+        internal static string DatabaseDuplicate_Title {
+            get {
+                return ResourceManager.GetString("DatabaseDuplicate_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to امکان انجام این عملیات وجود ندارد زیرا این داده با اطلاعات دیگری مرتبط است.
+        /// </summary>
+        internal static string DatabaseForeignKeyViolation_Description {
+            get {
+                return ResourceManager.GetString("DatabaseForeignKeyViolation_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطای ارتباط داده‌ها.
+        /// </summary>
+        internal static string DatabaseForeignKeyViolation_Title {
+            get {
+                return ResourceManager.GetString("DatabaseForeignKeyViolation_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مجوز لازم برای دسترسی به منبع یا صفحه مورد نظر وجود ندارد.
         /// </summary>
         internal static string Forbidden_Description {

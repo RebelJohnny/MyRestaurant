@@ -15,13 +15,21 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.MealPeriods.V1
         public async Task<ActionResult<ResponseModel<MealPeriodDTO>>> Post(CreateMealPeriodCommand command, CancellationToken cancellationToken)
         {
             var data = await mediator.Send(command, cancellationToken);
-            return Respond(ResponseModel<MealPeriodDTO>.Created(data));
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
+            return Respond(ResponseModel<MealPeriodDTO>.Created(data.Value!));
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseModel>> Put(long id, UpdateMealPeriodCommand command, CancellationToken cancellationToken)
         {
             command.Id = id;
-            await mediator.Send(command, cancellationToken);
+            var data = await mediator.Send(command, cancellationToken);
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
             return Respond(ResponseModel.Ok());
         }
         [HttpDelete("{id}")]

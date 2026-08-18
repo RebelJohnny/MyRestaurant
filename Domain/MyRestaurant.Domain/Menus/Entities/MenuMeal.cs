@@ -1,6 +1,4 @@
-﻿using MyRestaurant.Domain.Menus.Args;
-using MyRestaurant.Domain.Shared.Abstracts;
-using MyRestaurant.Framework.Helpers;
+﻿using MyRestaurant.Domain.Shared.Abstracts;
 
 namespace MyRestaurant.Domain.Menus.Entities
 {
@@ -8,7 +6,6 @@ namespace MyRestaurant.Domain.Menus.Entities
     {
         // Id is MealId
         public byte[] RowVersion { get; private set; }
-
         public long MenuId { get; private set; }
         public Menu Menu { get; private set; }
         private MenuMeal() { }

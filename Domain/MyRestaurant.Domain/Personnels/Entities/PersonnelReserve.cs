@@ -15,15 +15,16 @@ namespace MyRestaurant.Domain.Personnels.Entities
         public long PersonnelId { get; private set; }
         public Personnel Personnel { get; private set; }
         private PersonnelReserve() { }
-        private PersonnelReserve(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
+        private PersonnelReserve(long id, PersonnelReserveArgs args)
         {
-            Id = idGenerator.NextId();
+            Id = id;
             MealPeriodId = args.MealPeriodId;
             Date = args.Date;
         }
         internal static PersonnelReserve Create(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
         {
-            return new PersonnelReserve(idGenerator,args);
+            var id = idGenerator.NextId();
+            return new PersonnelReserve(id, args);
         }
 
         internal void SetArticles(List<PersonnelReservedMealArgs> args)
@@ -32,23 +33,17 @@ namespace MyRestaurant.Domain.Personnels.Entities
             _meals = newArticles;
         }
 
-        internal void Receive()
+        internal Result Receive()
         {
-            try
+            foreach (var item in Meals)
             {
-                foreach (var item in Meals)
+                var result = item.Receive();
+                if (!result.IsSuccess)
                 {
-                    item.Receive();
+                    return result;
                 }
             }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-
-            }
+            return Result.Success();
         }
     }
 }

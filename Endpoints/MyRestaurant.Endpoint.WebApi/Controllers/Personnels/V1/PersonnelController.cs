@@ -15,13 +15,21 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
         public async Task<ActionResult<ResponseModel<PersonnelDTO>>> Post(CreatePersonnelCommand command, CancellationToken cancellationToken)
         {
             var data = await mediator.Send(command, cancellationToken);
-            return Respond(ResponseModel<PersonnelDTO>.Created(data));
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
+            return Respond(ResponseModel<PersonnelDTO>.Created(data.Value!));
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseModel>> Put(long id, UpdatePersonnelCommand command, CancellationToken cancellationToken)
         {
             command.Id = id;
-            await mediator.Send(command, cancellationToken);
+            var data = await mediator.Send(command, cancellationToken);
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
             return Respond(ResponseModel.Ok());
         }
         [HttpDelete("{id}")]
@@ -53,7 +61,11 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Personnels.V1
         public async Task<ActionResult<ResponseModel>> Put(long id, ReserveForPersonnelCommand command, CancellationToken cancellationToken)
         {
             command.PersonnelId = id;
-            await mediator.Send(command, cancellationToken);
+            var data = await mediator.Send(command, cancellationToken);
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
             return Respond(ResponseModel.Ok());
         }
         [HttpGet]

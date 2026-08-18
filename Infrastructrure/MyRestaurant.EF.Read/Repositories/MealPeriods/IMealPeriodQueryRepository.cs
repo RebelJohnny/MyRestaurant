@@ -10,5 +10,6 @@ namespace MyRestaurant.EF.Read.Repositories.MealPeriods
         Task<PagedResult<MealPeriodQueryResult>> GetList(QueryParams queryParams, CancellationToken cancellationToken);
         Task<MealPeriodQueryResult?> GetById(long id, CancellationToken cancellationToken);
         Task<List<MealPeriodQueryResult>> GetAll(CancellationToken cancellationToken);
+        Task<bool> CheckNameExistence(long id, string name, CancellationToken cancellationToken);
     }
 }

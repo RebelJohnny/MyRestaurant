@@ -33,7 +33,7 @@ namespace MyRestaurant.EF.Read.Repositories.MealPeriods
                     IsActive = mp.IsActive
                 })
                 .Where(predicate)
-                .ApplySorting(queryParams.Sorts, nameof(MealPeriodQueryResult.Time));
+                .ApplySorting(queryParams.Sorts, nameof(MealPeriodQueryResult.Time), false);
             var totalCount = await query.CountAsync(cancellationToken);
             var items = await query.ApplyPaging(queryParams.PaginationParams.PageIndex, queryParams.PaginationParams.PageSize).ToListAsync(cancellationToken);
             return new PagedResult<MealPeriodQueryResult>(queryParams.PaginationParams.PageIndex, queryParams.PaginationParams.PageSize, totalCount, items);
@@ -48,6 +48,10 @@ namespace MyRestaurant.EF.Read.Repositories.MealPeriods
                     Time = mp.Time,
                     IsActive = mp.IsActive
                 }).OrderBy(mp => mp.Time).ToListAsync(cancellationToken);
+        }
+        public async Task<bool> CheckNameExistence(long id, string name, CancellationToken cancellationToken)
+        {
+            return await dbSet.AnyAsync(mp => mp.Id != id && mp.Name.Trim() == name.Trim(), cancellationToken);
         }
     }
 }

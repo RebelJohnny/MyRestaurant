@@ -1,8 +1,9 @@
-﻿using MyRestaurant.Framework.Mediator;
+﻿using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.Contracts.Personnels
 {
-    public sealed class ReserveForPersonnelCommand : ICommand
+    public sealed class ReserveForPersonnelCommand : ICommand<Result>
     {
         public long PersonnelId { get; set; }
         public long MealPeriodId { get; set; }

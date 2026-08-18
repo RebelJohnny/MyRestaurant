@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PersonnelCodeExists_ِDescription" xml:space="preserve">
+  <data name="MealNameRequired" xml:space="preserve">
+    <value>نام غذا الزامی است</value>
+  </data>
+  <data name="MealPeriodNameRequired" xml:space="preserve">
+    <value>نام وعده غذایی الزامی است</value>
+  </data>
+  <data name="MealPeriodExceptions_Title" xml:space="preserve">
+    <value>خطا در ثبت وعده غذایی</value>
+  </data>
+  <data name="MealPeriodInvalidTime" xml:space="preserve">
+    <value>زمان وارد شده برای وعده غذایی غیرمنطقی است</value>
+  </data>
+  <data name="MealPeriodNameExists" xml:space="preserve">
+    <value>وعده غذایی با این نام قبلا تعریف شده است</value>
+  </data>
+  <data name="PersonnelCodeExists" xml:space="preserve">
     <value>پرسنلی با این کد قبلا تعریف شده است</value>
   </data>
   <data name="PersonnelExceptions_Title" xml:space="preserve">
@@ -125,5 +140,38 @@
   </data>
   <data name="UnhandledException" xml:space="preserve">
     <value>خطای پیش‌بینی نشده</value>
+  </data>
+  <data name="MealNameExists" xml:space="preserve">
+    <value>غذایی با این نام قبلا تعریف شده است</value>
+  </data>
+  <data name="MealTypeRequired" xml:space="preserve">
+    <value>نوع غذا الزامی است</value>
+  </data>
+  <data name="MealExceptions_Title" xml:space="preserve">
+    <value>خطا در ثبت غذا</value>
+  </data>
+  <data name="PersonnelNameRequired" xml:space="preserve">
+    <value>نام پرسنل الزامی است</value>
+  </data>
+  <data name="PersonnelCodeRequired" xml:space="preserve">
+    <value>کد پرسنل الزامی است</value>
+  </data>
+  <data name="MenuExceptions_Title" xml:space="preserve">
+    <value>خطا در ثبت منو</value>
+  </data>
+  <data name="MenuDateInThePast" xml:space="preserve">
+    <value>تعریف منوی جدید برای تاریخ‌های گذشته ممکن نیست</value>
+  </data>
+  <data name="ReserveExceptions_Title" xml:space="preserve">
+    <value>خطا در ثبت رزرو</value>
+  </data>
+  <data name="ReserveDateInThePast" xml:space="preserve">
+    <value>ثبت رزرو جدید برای تاریخ‌های گذشته ممکن نیست</value>
+  </data>
+  <data name="MealAlreadyReceived" xml:space="preserve">
+    <value>غذا قبلا دریافت شده است</value>
+  </data>
+  <data name="MealsNotInMenuForDayPeriod" xml:space="preserve">
+    <value>بعضی از غذاهای انتخابی در منوی روز تعریف نشده‌اند</value>
   </data>
 </root>

@@ -61,11 +61,128 @@ namespace MyRestaurant.Domain.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to غذا قبلا دریافت شده است.
+        /// </summary>
+        public static string MealAlreadyReceived {
+            get {
+                return ResourceManager.GetString("MealAlreadyReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطا در ثبت غذا.
+        /// </summary>
+        public static string MealExceptions_Title {
+            get {
+                return ResourceManager.GetString("MealExceptions_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to غذایی با این نام قبلا تعریف شده است.
+        /// </summary>
+        public static string MealNameExists {
+            get {
+                return ResourceManager.GetString("MealNameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام غذا الزامی است.
+        /// </summary>
+        public static string MealNameRequired {
+            get {
+                return ResourceManager.GetString("MealNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطا در ثبت وعده غذایی.
+        /// </summary>
+        public static string MealPeriodExceptions_Title {
+            get {
+                return ResourceManager.GetString("MealPeriodExceptions_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زمان وارد شده برای وعده غذایی غیرمنطقی است.
+        /// </summary>
+        public static string MealPeriodInvalidTime {
+            get {
+                return ResourceManager.GetString("MealPeriodInvalidTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to وعده غذایی با این نام قبلا تعریف شده است.
+        /// </summary>
+        public static string MealPeriodNameExists {
+            get {
+                return ResourceManager.GetString("MealPeriodNameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام وعده غذایی الزامی است.
+        /// </summary>
+        public static string MealPeriodNameRequired {
+            get {
+                return ResourceManager.GetString("MealPeriodNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to بعضی از غذاهای انتخابی در منوی روز تعریف نشده‌اند.
+        /// </summary>
+        public static string MealsNotInMenuForDayPeriod {
+            get {
+                return ResourceManager.GetString("MealsNotInMenuForDayPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع غذا الزامی است.
+        /// </summary>
+        public static string MealTypeRequired {
+            get {
+                return ResourceManager.GetString("MealTypeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعریف منوی جدید برای تاریخ‌های گذشته ممکن نیست.
+        /// </summary>
+        public static string MenuDateInThePast {
+            get {
+                return ResourceManager.GetString("MenuDateInThePast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطا در ثبت منو.
+        /// </summary>
+        public static string MenuExceptions_Title {
+            get {
+                return ResourceManager.GetString("MenuExceptions_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پرسنلی با این کد قبلا تعریف شده است.
         /// </summary>
-        public static string PersonnelCodeExists_ِDescription {
+        public static string PersonnelCodeExists {
             get {
-                return ResourceManager.GetString("PersonnelCodeExists_ِDescription", resourceCulture);
+                return ResourceManager.GetString("PersonnelCodeExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد پرسنل الزامی است.
+        /// </summary>
+        public static string PersonnelCodeRequired {
+            get {
+                return ResourceManager.GetString("PersonnelCodeRequired", resourceCulture);
             }
         }
         
@@ -75,6 +192,33 @@ namespace MyRestaurant.Domain.Messages {
         public static string PersonnelExceptions_Title {
             get {
                 return ResourceManager.GetString("PersonnelExceptions_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام پرسنل الزامی است.
+        /// </summary>
+        public static string PersonnelNameRequired {
+            get {
+                return ResourceManager.GetString("PersonnelNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ثبت رزرو جدید برای تاریخ‌های گذشته ممکن نیست.
+        /// </summary>
+        public static string ReserveDateInThePast {
+            get {
+                return ResourceManager.GetString("ReserveDateInThePast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطا در ثبت رزرو.
+        /// </summary>
+        public static string ReserveExceptions_Title {
+            get {
+                return ResourceManager.GetString("ReserveExceptions_Title", resourceCulture);
             }
         }
         

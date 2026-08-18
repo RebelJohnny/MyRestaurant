@@ -12,7 +12,7 @@ namespace MyRestaurant.Framework.Extensions
                 ? query
                 : query.Skip(pageIndex * pageSize).Take(pageSize);
         }
-        public static IQueryable<T> ApplySorting<T>(this IQueryable<T> query, IEnumerable<SortParams> sorts, string? defaultSortField = null)
+        public static IQueryable<T> ApplySorting<T>(this IQueryable<T> query, IEnumerable<SortParams> sorts, string? defaultSortField = null, bool defaultIsDescending = true)
         {
             var sortList = sorts.ToList();
             if (sortList.Count == 0)
@@ -26,7 +26,7 @@ namespace MyRestaurant.Framework.Extensions
                     sortList.Add(new SortParams
                     {
                         Field = defaultSortField,
-                        IsDescending = true
+                        IsDescending = defaultIsDescending
                     });
                 }
             }

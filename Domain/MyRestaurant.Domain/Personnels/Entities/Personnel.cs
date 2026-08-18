@@ -1,6 +1,7 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
 using MyRestaurant.Domain.Personnels.Exceptions;
 using MyRestaurant.Domain.Shared.Abstracts;
+using MyRestaurant.Framework.Exceptions;
 using MyRestaurant.Framework.Helpers;
 
 namespace MyRestaurant.Domain.Personnels.Entities
@@ -20,20 +21,35 @@ namespace MyRestaurant.Domain.Personnels.Entities
             Code = args.Code;
             Name = args.Name;
         }
-        public static async Task<Personnel> Create(ITimestampIdGenerator idGenerator, PersonnelArgs args, IPersonnelDomainService domainService)
+        public static async Task<Result<Personnel>> Create(ITimestampIdGenerator idGenerator, PersonnelArgs args, IPersonnelDomainService domainService, CancellationToken cancellationToken)
         {
             var id = idGenerator.NextId();
-            await GuardAgainstCodeExistence(id, args.Code, domainService);
-            return new Personnel(id, args);
+            var error = await Validate(id, args, domainService, cancellationToken);
+            if (error is not null)
+            {
+                return Result<Personnel>.Failure(error);
+            }
+            var personnel = new Personnel(id, args);
+            return Result<Personnel>.Success(personnel);
         }
-        public async Task Modify(PersonnelArgs args, IPersonnelDomainService domainService)
+        public async Task<Result> Modify(PersonnelArgs args, IPersonnelDomainService domainService, CancellationToken cancellationToken)
         {
-            await GuardAgainstCodeExistence(Id, args.Code, domainService);
+            var error = await Validate(Id, args, domainService, cancellationToken);
+            if (error is not null)
+            {
+                return Result.Failure(error);
+            }
             Code = args.Code;
             Name = args.Name;
+            return Result.Success();
         }
-        public void ReserveOrders(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args)
+        public async Task<Result> ReserveOrders(ITimestampIdGenerator idGenerator, PersonnelReserveArgs args, IPersonnelDomainService domainService, CancellationToken cancellationToken)
         {
+            var error = await ValidateReserve(args, domainService, cancellationToken);
+            if (error is not null)
+            {
+                return Result.Failure(error);
+            }
             var reserve = Reserves.FirstOrDefault(ro => ro.Date == args.Date && ro.MealPeriodId == args.MealPeriodId);
             if (reserve is null)
             {
@@ -45,17 +61,67 @@ namespace MyRestaurant.Domain.Personnels.Entities
             {
                 reserve.SetArticles(args.Meals);
             }
+            return Result.Success();
         }
         public void SoftDelete()
         {
             IsDeleted = true;
         }
-        private static async Task GuardAgainstCodeExistence(long id, string code, IPersonnelDomainService domainService)
+        private static async Task<Error?> Validate(long id, PersonnelArgs args, IPersonnelDomainService domainService, CancellationToken cancellationToken)
         {
-            if (await domainService.CheckCodeExistence(id, code))
+            return
+                GuardAgainstEmptyCode(args.Code) ??
+                GuardAgainstEmptyName(args.Name) ??
+                await GuardAgainstCodeExistence(id, args.Code, domainService, cancellationToken);
+        }
+        private static Error? GuardAgainstEmptyCode(string code)
+        {
+            if (string.IsNullOrEmpty(code))
             {
-                throw PersonnelExceptions.PersonnelCodeExists;
+                return PersonnelExceptions.PersonnelCodeRequired;
             }
+            return null;
+        }
+        private static Error? GuardAgainstEmptyName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return PersonnelExceptions.PersonnelNameRequired;
+            }
+            return null;
+        }
+        private static async Task<Error?> GuardAgainstCodeExistence(long id, string code, IPersonnelDomainService domainService, CancellationToken cancellationToken)
+        {
+            if (await domainService.CheckCodeExistence(id, code, cancellationToken))
+            {
+                return PersonnelExceptions.PersonnelCodeExists;
+            }
+            return null;
+        }
+
+        private static async Task<Error?> ValidateReserve(PersonnelReserveArgs args, IPersonnelDomainService domainService, CancellationToken cancellationToken)
+        {
+            return 
+                GuardAgainstDateInThePast(args.Date) ?? 
+                await GuardAgainstReservingMealsNotAvailableOnDayPeriod(args, domainService, cancellationToken);
+        }
+        private static Error? GuardAgainstDateInThePast(DateTimeOffset date)
+        {
+            if (date.Date.CompareTo(DateTimeOffset.Now.Date) < 0)
+            {
+                return PersonnelExceptions.ReserveDateInThePast;
+            }
+            return null;
+        }
+        private static async Task<Error?> GuardAgainstReservingMealsNotAvailableOnDayPeriod(PersonnelReserveArgs args, IPersonnelDomainService domainService, CancellationToken cancellationToken)
+        {
+            if (!await domainService.CheckMealsAvailableOnMenuForDayPeriod(args.Date, args.MealPeriodId, args.Meals.Select(m => m.Id), cancellationToken))
+            {
+                return PersonnelExceptions.MealsNotInMenuForDayPeriod;
+            }
+            return null;
         }
     }
 }
+
+ 

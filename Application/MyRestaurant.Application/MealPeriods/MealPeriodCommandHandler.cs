@@ -1,6 +1,7 @@
 ﻿using MyRestaurant.Application.Contracts.MealPeriods;
 using MyRestaurant.Domain.MealPeriods;
 using MyRestaurant.Domain.MealPeriods.Entities;
+using MyRestaurant.Domain.Shared.Abstracts;
 using MyRestaurant.Framework.Data;
 using MyRestaurant.Framework.Exceptions;
 using MyRestaurant.Framework.Helpers;
@@ -8,28 +9,39 @@ using MyRestaurant.Framework.Mediator;
 
 namespace MyRestaurant.Application.MealPeriods
 {
-    internal class MealPeriodCommandHandler(ITimestampIdGenerator idGenerator, IUnitOfWork unitOfWork, IMealPeriodRepository repository) :
-        ICommandHandler<CreateMealPeriodCommand, MealPeriodDTO>,
-        ICommandHandler<UpdateMealPeriodCommand>,
+    internal class MealPeriodCommandHandler(ITimestampIdGenerator idGenerator, IUnitOfWork unitOfWork, IMealPeriodRepository repository, IMealPeriodDomainService domainService) :
+        ICommandHandler<CreateMealPeriodCommand, Result<MealPeriodDTO>>,
+        ICommandHandler<UpdateMealPeriodCommand, Result>,
         ICommandHandler<DeleteMealPeriodCommand>,
         ICommandHandler<ActivateMealPeriodCommand>,
         ICommandHandler<DeactivateMealPeriodCommand>
     {
-        public async Task<MealPeriodDTO> Handle(CreateMealPeriodCommand request, CancellationToken cancellationToken)
+        public async Task<Result<MealPeriodDTO>> Handle(CreateMealPeriodCommand request, CancellationToken cancellationToken)
         {
             var args = MealPeriodMapper.Map(request);
-            var mealPeriod = MealPeriod.Create(idGenerator, args);
+            var result = await MealPeriod.Create(idGenerator, args, domainService, cancellationToken);
+            if (!result.IsSuccess)
+            {
+                return Result<MealPeriodDTO>.Failure(result.Error!);
+            }
+            var mealPeriod = result.Value!;
             await repository.Add(mealPeriod);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            return MealPeriodMapper.Map(mealPeriod);
+            var returnType = MealPeriodMapper.Map(mealPeriod);
+            return Result<MealPeriodDTO>.Success(returnType);
         }
 
-        public async Task Handle(UpdateMealPeriodCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateMealPeriodCommand request, CancellationToken cancellationToken)
         {
             var mealPeriod = await repository.GetById(request.Id) ?? throw Error.NotFound;
             var args = MealPeriodMapper.Map(request);
-            mealPeriod.Modify(args);
+            var result = await mealPeriod.Modify(args, domainService, cancellationToken);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
             await unitOfWork.SaveChangesAsync(cancellationToken);
+            return result;
         }
 
         public async Task Handle(DeleteMealPeriodCommand request, CancellationToken cancellationToken)

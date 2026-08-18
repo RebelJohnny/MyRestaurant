@@ -4,6 +4,7 @@ using MyRestaurant.DomainService._ConfigurationExtension;
 using MyRestaurant.EF._ConfigurationExtensions;
 using MyRestaurant.EF.Read._ConfigurationExtensions;
 using MyRestaurant.Endpoint.WebApi.ExceptionHandlers;
+using MyRestaurant.Endpoint.WebApi.Middlewares;
 using MyRestaurant.Framework.Data;
 using MyRestaurant.Framework.Helpers;
 using MyRestaurant.Framework.HttpContext;
@@ -56,6 +57,7 @@ app.UseExceptionHandler(new ExceptionHandlerOptions()
 {
     AllowStatusCode404Response = true
 });
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

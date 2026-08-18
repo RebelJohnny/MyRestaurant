@@ -19,7 +19,11 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Menus.V1
         [HttpPut]
         public async Task<ActionResult<ResponseModel>> Put(UpdateMenuOnDayCommand command, CancellationToken cancellationToken)
         {
-            await mediator.Send(command, cancellationToken);
+            var data = await mediator.Send(command, cancellationToken);
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
             return Respond(ResponseModel.Ok());
         }
         [HttpGet("Day")]

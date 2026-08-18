@@ -11,5 +11,6 @@ namespace MyRestaurant.EF.Read.Repositories.Meals
         Task<MealFormData?> GetById(long id, CancellationToken cancellationToken);
         Task<List<MealFormData>> GetByIds(IEnumerable<long> ids, CancellationToken cancellationToken);
         Task<List<MealQueryResult>> GetAll(CancellationToken cancellationToken);
+        Task<bool> CheckNameExistence(long id, string name, CancellationToken cancellationToken);
     }
 }

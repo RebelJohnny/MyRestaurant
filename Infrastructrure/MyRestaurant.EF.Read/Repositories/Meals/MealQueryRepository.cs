@@ -58,5 +58,9 @@ namespace MyRestaurant.EF.Read.Repositories.Meals
                     CreatedAt = m.CreatedAt,
                 }).OrderByDescending(m => m.CreatedAt).ToListAsync(cancellationToken);
         }
+        public async Task<bool> CheckNameExistence(long id, string name, CancellationToken cancellationToken)
+        {
+            return await dbSet.AnyAsync(p => p.Id != id && p.Name.Trim() == name.Trim(), cancellationToken);
+        }
     }
 }

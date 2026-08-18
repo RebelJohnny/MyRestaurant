@@ -4,6 +4,7 @@ using MyRestaurant.Application.Contracts.Meals;
 using MyRestaurant.Application.Query.Contracts.Meals;
 using MyRestaurant.Endpoint.WebApi.Models;
 using MyRestaurant.Framework.Querying;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MyRestaurant.Endpoint.WebApi.Controllers.Meals.V1
 {
@@ -15,13 +16,21 @@ namespace MyRestaurant.Endpoint.WebApi.Controllers.Meals.V1
         public async Task<ActionResult<ResponseModel<MealDTO>>> Post(CreateMealCommand command, CancellationToken cancellationToken)
         {
             var data = await mediator.Send(command, cancellationToken);
-            return Respond(ResponseModel<MealDTO>.Created(data));
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
+            return Respond(ResponseModel<MealDTO>.Created(data.Value!));
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseModel>> Put(long id, UpdateMealCommand command, CancellationToken cancellationToken)
         {
             command.Id = id;
-            await mediator.Send(command, cancellationToken);
+            var data = await mediator.Send(command, cancellationToken);
+            if (!data.IsSuccess)
+            {
+                return Respond(data.Error!);
+            }
             return Respond(ResponseModel.Ok());
         }
         [HttpDelete("{id}")]

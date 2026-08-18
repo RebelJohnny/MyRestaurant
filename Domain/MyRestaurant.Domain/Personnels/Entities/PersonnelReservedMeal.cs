@@ -1,4 +1,5 @@
 ﻿using MyRestaurant.Domain.Personnels.Args;
+using MyRestaurant.Domain.Personnels.Exceptions;
 using MyRestaurant.Domain.Shared.Abstracts;
 
 namespace MyRestaurant.Domain.Personnels.Entities
@@ -23,13 +24,15 @@ namespace MyRestaurant.Domain.Personnels.Entities
         {
             return new PersonnelReservedMeal(args);
         }
-        internal void Receive()
+        internal Result Receive()
         {
             if (IsReceived)
             {
-                throw new Exception();
+                var error = PersonnelExceptions.MealAlreadyReceived;
+                return Result.Failure(error);
             }
             IsReceived = true;
+            return Result.Success();
         }
     }
 }

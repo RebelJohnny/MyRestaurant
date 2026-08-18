@@ -17,7 +17,7 @@ namespace MyRestaurant.EF.Read._ConfigurationExtensions
             {
                 var connectionString = configuration.GetConnectionString("Restaurant");
                 // FUTURE PHASES: Decryption logic for encrypted connection string left for when Auth and security is being added
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure());
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
         }

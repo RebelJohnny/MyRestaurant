@@ -53,9 +53,9 @@ namespace MyRestaurant.EF.Read.Repositories.Personnels
                 })
             }).ToListAsync(cancellationToken);
         }
-        public async Task<bool> CheckCodeExistence(long id, string code)
+        public async Task<bool> CheckCodeExistence(long id, string code, CancellationToken cancellationToken)
         {
-            return await context.Personnels.AnyAsync(p => p.Id != id && p.Code.Trim() == code.Trim());
+            return await dbSet.AnyAsync(p => p.Id != id && p.Code.Trim() == code.Trim(), cancellationToken);
         }
         public async Task<List<PersonnelQueryResult>> GetAll(CancellationToken cancellationToken)
         {

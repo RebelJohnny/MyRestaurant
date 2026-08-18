@@ -117,6 +117,42 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DatabaseConcurrency_Description" xml:space="preserve">
+    <value>این اطلاعات توسط کاربر دیگری تغییر کرده است. لطفا اطلاعات را مجدد دریافت کنید</value>
+  </data>
+  <data name="DatabaseConcurrency_Title" xml:space="preserve">
+    <value>اطلاعات تغییر کرده است</value>
+  </data>
+  <data name="DatabaseDataRequired_Description" xml:space="preserve">
+    <value>یکی از اطلاعات مورد نیاز وارد نشده است</value>
+  </data>
+  <data name="DatabaseDataRequired_Title" xml:space="preserve">
+    <value>خطای الزام ورود اطلاعات</value>
+  </data>
+  <data name="DatabaseDataTooLong_Description" xml:space="preserve">
+    <value>یکی از مقادیر وارد شده بیش از حد مجاز است</value>
+  </data>
+  <data name="DatabaseDataTooLong_Title" xml:space="preserve">
+    <value>خطای اطلاعات</value>
+  </data>
+  <data name="DatabaseDuplicate_Description" xml:space="preserve">
+    <value>این مقدار قبلا ثبت شده است</value>
+  </data>
+  <data name="DatabaseDuplicate_Title" xml:space="preserve">
+    <value>خطای داده</value>
+  </data>
+  <data name="DatabaseForeignKeyViolation_Description" xml:space="preserve">
+    <value>امکان انجام این عملیات وجود ندارد زیرا این داده با اطلاعات دیگری مرتبط است</value>
+  </data>
+  <data name="DatabaseForeignKeyViolation_Title" xml:space="preserve">
+    <value>خطای ارتباط داده‌ها</value>
+  </data>
+  <data name="Database_Description" xml:space="preserve">
+    <value>مشکلی در پایگاه داده رخ داده است</value>
+  </data>
+  <data name="Database_Title" xml:space="preserve">
+    <value>خطای پایگاه داده</value>
+  </data>
   <data name="Forbidden_Description" xml:space="preserve">
     <value>مجوز لازم برای دسترسی به منبع یا صفحه مورد نظر وجود ندارد</value>
   </data>
