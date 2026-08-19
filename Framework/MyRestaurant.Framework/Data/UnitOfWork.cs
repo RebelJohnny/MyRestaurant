@@ -14,9 +14,9 @@ namespace MyRestaurant.Framework.Data
             {
                 return await context.SaveChangesAsync(cancellationToken);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                throw DatabaseExceptions.Concurrency;
+                throw DatabaseExceptions.Concurrency(ex);
             }
             catch (Exception ex)
             {
@@ -24,15 +24,15 @@ namespace MyRestaurant.Framework.Data
                 {
                     throw sqlException.Number switch
                     {
-                        2601 or 2627 => DatabaseExceptions.Duplicate,
-                        547 => DatabaseExceptions.ForeignKeyViolation,
-                        515 => DatabaseExceptions.RequiredValue,
-                        2628 => DatabaseExceptions.ValueTooLong,
-                        _ => DatabaseExceptions.Unknown
+                        2601 or 2627 => DatabaseExceptions.Duplicate(sqlException),
+                        547 => DatabaseExceptions.ForeignKeyViolation(sqlException),
+                        515 => DatabaseExceptions.RequiredValue(sqlException),
+                        2628 => DatabaseExceptions.ValueTooLong(sqlException),
+                        _ => DatabaseExceptions.Unknown(sqlException)
                     };
                 }
 
-                throw DatabaseExceptions.Unknown;
+                throw DatabaseExceptions.Unknown(ex);
             }
         }
         private void NormalizeStrings()

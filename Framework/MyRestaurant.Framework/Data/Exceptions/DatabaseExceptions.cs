@@ -1,19 +1,78 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using MyRestaurant.Framework.Exceptions;
 
 namespace MyRestaurant.Framework.Data.Exceptions
 {
     internal class DatabaseExceptions
     {
-        public static Error FromDbException(Exception exception)
+        //    public static Error FromDbException(Exception exception)
+        //    {
+        //        return new Error
+        //        {
+        //            Title = ExceptionMessages.Database_Title,
+        //            Message = exception.InnerException.Message,
+        //            StatusCode = StatusCodes.Status500InternalServerError
+        //        };
+        //    }
+        public static Error Concurrency(DbUpdateConcurrencyException ex)
         {
-            return new Error(ExceptionMessages.Database_Title, exception.InnerException.Message, StatusCodes.Status500InternalServerError);
+            return new Error
+            {
+                Title = ExceptionMessages.DatabaseConcurrency_Title,
+                Message = ExceptionMessages.DatabaseConcurrency_Description,
+                StatusCode = StatusCodes.Status409Conflict,
+                InnerExceptionMessage = ex.Message
+            };
         }
-        public static readonly Error Concurrency = new(ExceptionMessages.DatabaseConcurrency_Title, ExceptionMessages.DatabaseConcurrency_Description, StatusCodes.Status409Conflict);
-        public static readonly Error Duplicate = new(ExceptionMessages.DatabaseDuplicate_Title, ExceptionMessages.DatabaseDuplicate_Description, StatusCodes.Status409Conflict);
-        public static readonly Error ForeignKeyViolation = new(ExceptionMessages.DatabaseForeignKeyViolation_Title, ExceptionMessages.DatabaseForeignKeyViolation_Description, StatusCodes.Status409Conflict);
-        public static readonly Error RequiredValue = new(ExceptionMessages.DatabaseDataRequired_Title, ExceptionMessages.DatabaseDataRequired_Description);
-        public static readonly Error ValueTooLong = new(ExceptionMessages.DatabaseDataTooLong_Title, ExceptionMessages.DatabaseDataTooLong_Description);
-        public static readonly Error Unknown = new(ExceptionMessages.Database_Title, ExceptionMessages.Database_Description, StatusCodes.Status500InternalServerError);
+        public static Error Duplicate(SqlException ex)
+        {
+            return new Error
+            {
+                Title = ExceptionMessages.DatabaseDuplicate_Title,
+                Message = ExceptionMessages.DatabaseDuplicate_Description,
+                StatusCode = StatusCodes.Status409Conflict,
+                InnerExceptionMessage = ex.Message
+            };
+        }
+        public static Error ForeignKeyViolation(SqlException ex)
+        {
+            return new Error
+            {
+                Title = ExceptionMessages.DatabaseForeignKeyViolation_Title,
+                Message = ExceptionMessages.DatabaseForeignKeyViolation_Description,
+                StatusCode = StatusCodes.Status409Conflict,
+                InnerExceptionMessage = ex.Message
+            };
+        }
+        public static Error RequiredValue(SqlException ex)
+        {
+            return new Error
+            {
+                Title = ExceptionMessages.DatabaseDataRequired_Title,
+                Message = ExceptionMessages.DatabaseDataRequired_Description,
+                InnerExceptionMessage = ex.Message
+            };
+        }
+        public static Error ValueTooLong(SqlException ex)
+        {
+            return new Error
+            {
+                Title = ExceptionMessages.DatabaseDataTooLong_Title,
+                Message = ExceptionMessages.DatabaseDataTooLong_Description,
+                InnerExceptionMessage = ex.Message
+            };
+        }
+        public static Error Unknown(Exception ex)
+        {
+            return new Error
+            {
+                Title = ExceptionMessages.Database_Title,
+                Message = ExceptionMessages.Database_Description,
+                StatusCode = StatusCodes.Status500InternalServerError,
+                InnerExceptionMessage = ex.Message
+            };
+        }
     }
 }

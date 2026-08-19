@@ -1,12 +1,11 @@
-﻿using System.Diagnostics;
+﻿using MyRestaurant.Framework.Exceptions;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 
 namespace MyRestaurant.Endpoint.WebApi.Middlewares
 {
-    public class RequestResponseLoggingMiddleware(
-        RequestDelegate next,
-        ILogger<RequestResponseLoggingMiddleware> logger)
+    public class RequestResponseLoggingMiddleware(RequestDelegate next, ILogger<RequestResponseLoggingMiddleware> logger)
     {
         public async Task Invoke(HttpContext context)
         {
@@ -40,15 +39,16 @@ namespace MyRestaurant.Endpoint.WebApi.Middlewares
 
                 await next(context);
             }
+            catch (RichException ex)
+            {
+                logger.LogError(ex, "An unhandled exception occurred while processing the request.");
+                await LogToFileAsync($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {ex.LogMessage}");
+                throw;
+            }
             catch (Exception ex)
             {
-                logger.LogError(
-                    ex,
-                    "An unhandled exception occurred while processing the request.");
-
-                await LogToFileAsync(
-                    $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {ex}");
-
+                logger.LogError(ex, "An unhandled exception occurred while processing the request.");
+                await LogToFileAsync($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {ex}");
                 throw;
             }
             finally
@@ -72,9 +72,7 @@ namespace MyRestaurant.Endpoint.WebApi.Middlewares
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(
-                        ex,
-                        "Failed to read captured response body.");
+                    logger.LogError(ex, "Failed to read captured response body.");
                 }
 
                 // Restore the original response stream

@@ -5,6 +5,6 @@ namespace MyRestaurant.Domain.Menus.Exceptions
 {
     internal class MenuExceptions
     {
-        public static Error MenuDateInThePast = new(RestaurantMessages.MenuExceptions_Title, RestaurantMessages.MenuDateInThePast);
+        public static Error MenuDateInThePast = new() { Title = RestaurantMessages.MenuExceptions_Title, Message = RestaurantMessages.MenuDateInThePast };
     }
 }
